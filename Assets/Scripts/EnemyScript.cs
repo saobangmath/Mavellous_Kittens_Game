@@ -18,6 +18,7 @@ public class EnemyScript : MonoBehaviour
     private int _hp;
     private PlayerScript _playerScript;
     private DataController _dataController;
+    [SerializeField] private GameObject weapon;
 
     private bool complete = false;
     // Start is called before the first frame update
@@ -30,7 +31,7 @@ public class EnemyScript : MonoBehaviour
         _dataController = FindObjectOfType<DataController>();
         if (_dataController != null) //Sanity check
         {
-            maxHP = _dataController.GetCurrentRoundData().questions.Length;
+            maxHP = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions.Length;
         }
 
         _hp = maxHP;
@@ -53,9 +54,9 @@ public class EnemyScript : MonoBehaviour
     IEnumerator runAttack()
     {
         _anim.SetTrigger("attack");
-        yield return new WaitForSeconds(1.0f);        //Delay so that the animation and hp decrease looks natural
-        _playerScript.DecreaseHP();
-        yield return false;
+        weapon.SetActive(true);
+        _playerScript.DeactivateWeapon();
+        yield return null;
     }
 
     public void DecreaseHP()
@@ -64,5 +65,17 @@ public class EnemyScript : MonoBehaviour
         bar.StartCoroutine(bar.UpdateBar((float)-_hp / (float)maxHP, (float)-(_hp - 1) / (float)maxHP));
         _hp -= 1;
     }
+    
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Weapon"))
+        {
+            DecreaseHP(); 
+        }
+    }
 
+    public void DeactivateWeapon()
+    {
+        weapon.SetActive(false);
+    }
 }

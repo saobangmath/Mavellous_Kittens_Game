@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private GameObject enemy;
     [SerializeField] private static int maxHP = 10;
+    [SerializeField] private GameObject weapon;
     private int _hp = maxHP;
 
     private EnemyScript _enemyScript;
@@ -31,8 +32,9 @@ public class PlayerScript : MonoBehaviour
     IEnumerator runAttack()
     {
         _anim.SetTrigger("attack");
-        yield return new WaitForSeconds(1.5f);
-        _enemyScript.DecreaseHP();
+        weapon.SetActive(true);
+        _enemyScript.DeactivateWeapon();
+        yield return null;
     }
 
     public void DecreaseHP()
@@ -40,5 +42,18 @@ public class PlayerScript : MonoBehaviour
         _anim.SetTrigger("hit");
         bar.StartCoroutine(bar.UpdateBar((float)_hp / (float)maxHP, (float)(_hp - 1) / (float)maxHP));
         _hp -= 1;        
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("EnemyWeapon"))
+        {
+            DecreaseHP();   
+        }
+    }
+
+    public void DeactivateWeapon()
+    {
+        weapon.SetActive(false);
     }
 }

@@ -15,9 +15,14 @@ public class QuestionController : MonoBehaviour
     private List<QnA> qData=new List<QnA>();
     [SerializeField] private TextMeshProUGUI questionTMP;
     [SerializeField] private Button[] choiceButtons;
+    [SerializeField] private GameObject nextButton;
     [SerializeField] private TextMeshProUGUI timeRemainingDisplay;
     [SerializeField] private GameObject levelFinishPrompt;
+    [SerializeField] private Sprite baseButtonImage;
+    [SerializeField] private Sprite correctButtonImage;
+    [SerializeField] private Sprite wrongButtonImage;
     private int currQidx = 0;
+    private int score = 0;
     private bool isRoundActive = false;
     private float timeRemaining;
     private RoundData currentRoundData;
@@ -30,7 +35,7 @@ public class QuestionController : MonoBehaviour
 
         if (_dataController != null)
         {
-            currentRoundData= _dataController.GetCurrentRoundData();
+            currentRoundData= _dataController.GetCurrentRoundData(_dataController.getCurrLevel());
             for (int i = 0; i < currentRoundData.questions.Length; ++i)
             {
                 addQuestionData(i);
@@ -65,6 +70,10 @@ public class QuestionController : MonoBehaviour
 
     void UpdateQuestion(int index)
     {
+        for (int i = 0; i < choiceButtons.Length; ++i)
+        {
+            choiceButtons[i].GetComponent<Image>().sprite = baseButtonImage;
+        }
         questionTMP.text = qData[index].questionText;    //Changes the text of the question 
         for (int i = 0; i < currentRoundData.questions[currQidx].ansChoice.Length; ++i)
         {
@@ -81,10 +90,20 @@ public class QuestionController : MonoBehaviour
         }
         if (choice != qData[currQidx].correctAns)        //Checks if the chosen answer is correct
         {
+            choiceButtons[choice - 1].GetComponent<Image>().sprite = wrongButtonImage;
+            for (int i = 0; i < choiceButtons.Length; ++i)
+            {
+                if (i == qData[currQidx].correctAns - 1)
+                {
+                    choiceButtons[i].GetComponent<Image>().sprite = correctButtonImage;
+                }
+            }
             _turnController.EnemyAttack();
         }
         else
         {
+            ++score;
+            choiceButtons[choice - 1].GetComponent<Image>().sprite = correctButtonImage;
             _turnController.PlayerAttack();
         }
     }
@@ -101,7 +120,7 @@ public class QuestionController : MonoBehaviour
         currQidx++;
         if (currQidx < currentRoundData.questions.Length)
         {
-            StartNewRound();
+            nextButton.SetActive(true);
         }
         else
         {
@@ -111,7 +130,7 @@ public class QuestionController : MonoBehaviour
 
     private void addQuestionData(int idx)
     {
-        QnA currRoundData = _dataController.GetCurrentRoundData().questions[idx];
+        QnA currRoundData = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions[idx];
         qData.Add(currRoundData);
     }
 
@@ -121,8 +140,9 @@ public class QuestionController : MonoBehaviour
         SceneManager.LoadScene("MenuScreen");
     }
 
-    private void StartNewRound()
+    public void StartNewRound()
     {
+        nextButton.SetActive(false);
         isRoundActive = true;
         UpdateQuestion(currQidx);
         for (int i = 0; i < currentRoundData.questions[currQidx].ansChoice.Length; ++i)
@@ -134,5 +154,7 @@ public class QuestionController : MonoBehaviour
     private void levelFinished()
     {
         levelFinishPrompt.SetActive(true);
+        levelFinishPrompt.GetComponentInChildren<TextMeshProUGUI>().text = "Score: "+score.ToString();
+
     }
 }

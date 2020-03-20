@@ -9,6 +9,28 @@ public class DataController : MonoBehaviour
     private PlayerProgress playerProgress;
 
     private string gameDataFileName = "data.json";
+    private int currLevel = 1;
+    private int currWorld=1;
+
+    public int getCurrWorld()
+    {
+        return currWorld;
+    }
+
+    public int getCurrLevel()
+    {
+        return currLevel;
+    }
+
+    public void setCurrWorld(int wrld)
+    {
+        currWorld = wrld;
+    }
+
+    public void setCurrLevel(int lvl)
+    {
+        currLevel = lvl;
+    }
 
     void Start()
     {
@@ -21,12 +43,12 @@ public class DataController : MonoBehaviour
         SceneManager.LoadScene("MenuScreen");
     }
 
-    public RoundData GetCurrentRoundData()
+    public RoundData GetCurrentRoundData(int currLvl)
     {
         // If we wanted to return different rounds, we could do that here
         // We could store an int representing the current round index in PlayerProgress
         
-        return allRoundData[0];
+        return allRoundData[currLvl-1];
     }
 
     public void SubmitNewPlayerScore(int newScore)
@@ -39,15 +61,15 @@ public class DataController : MonoBehaviour
         }
     }
 
-    public string GetLevelName() {
-      return allRoundData[0].name;
+    public string GetLevelName(int currLvl) {
+          return allRoundData[currLvl-1].name;
     }
 
     /*public string GetLevelDescription() {
       return allRoundData[0].description;
     }*/
 
-    public int GetLevelDifficulty() {
+    public int GetLevelDifficulty(int currLvl) {
       return allRoundData[0].difficulty;
     }
 
