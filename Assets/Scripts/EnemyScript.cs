@@ -31,7 +31,7 @@ public class EnemyScript : MonoBehaviour
         _dataController = FindObjectOfType<DataController>();
         if (_dataController != null) //Sanity check
         {
-            maxHP = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions.Length;
+            maxHP = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions.Count;
         }
 
         _hp = maxHP;

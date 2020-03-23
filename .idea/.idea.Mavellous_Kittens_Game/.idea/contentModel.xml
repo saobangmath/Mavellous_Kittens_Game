@@ -51,9 +51,12 @@
           <e p="CloudPingPong.cs" t="Include" />
           <e p="DataController.cs" t="Include" />
           <e p="EnemyScript.cs" t="Include" />
+          <e p="FirebaseScript.cs" t="Include" />
           <e p="GameData.cs" t="Include" />
           <e p="HP_Bar.cs" t="Include" />
+          <e p="LevelScript.cs" t="Include" />
           <e p="MenuScreenController.cs" t="Include" />
+          <e p="MenuScreenLoadParam.cs" t="Include" />
           <e p="PlayerProgress.cs" t="Include" />
           <e p="PlayerScript.cs" t="Include" />
           <e p="PlayerWorldMovement.cs" t="Include" />
@@ -61,6 +64,7 @@
           <e p="QuestionController.cs" t="Include" />
           <e p="RoundData.cs" t="Include" />
           <e p="TurnController.cs" t="Include" />
+          <e p="worldData.cs" t="Include" />
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">

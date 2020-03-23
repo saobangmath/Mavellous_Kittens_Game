@@ -22308,6 +22308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6215602670493046020}
+  - component: {fileID: 4670901750815211506}
   m_Layer: 0
   m_Name: World1Base
   m_TagString: Untagged
@@ -22331,6 +22332,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4670901750815211506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215602670493046023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b727f730106538b47a25af9268f84a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypointsArr:
+  - {fileID: 6215602669911039914}
+  - {fileID: 6215602669576392888}
+  - {fileID: 6215602668542552711}
+  - {fileID: 6215602669450614723}
+  - {fileID: 6215602668857484622}
+  - {fileID: 6215602669698987870}
+  - {fileID: 6215602669263236350}
+  - {fileID: 6215602668841508380}
+  - {fileID: 6215602669316801103}
+  - {fileID: 6215602670448352055}
+  - {fileID: 6215602669063677022}
+  - {fileID: 6215602669712131348}
+  - {fileID: 6215602670334656995}
 --- !u!1 &6215602670541399715
 GameObject:
   m_ObjectHideFlags: 0

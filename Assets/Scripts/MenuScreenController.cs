@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuScreenController : MonoBehaviour
 {
@@ -25,19 +26,20 @@ public class MenuScreenController : MonoBehaviour
 	private GameObject activeWorld;
 	private DataController _dataController;
 	private RoundData currentRoundData;
-	private int currLevel = 1;
 
 	void Start()
 	{
-		_dataController = FindObjectOfType<DataController>();                                // Store a reference to the DataController so we can request the data we need for this round
-		changeLvl();
-		
-		//GameObject.FindWithTag("LevelButton").GetComponentInChildren<Text>().text = dataController.GetLevelName();
+		_dataController = FindObjectOfType<DataController>();    // Store a reference to the DataController so we can request the data we need for this round
 
-		//popUpWindow = GameObject.Find("PopUpWindow");
-		//popUpWindow.gameObject.SetActive(false);
+		if (MenuScreenLoadParam.MenuLoadFromGame)
+		{
+			SelectWorld();
+			worldBaseGameObject.SetActive(false);
+			levelBaseGameObject.SetActive(true);
+			MenuScreenLoadParam.MenuLoadFromGame = false;
+		}
 	}
-
+	
 	public void SelectWorld()
 	{		
 		Vector3 camPos = camera.transform.position;
@@ -46,7 +48,7 @@ public class MenuScreenController : MonoBehaviour
 		activeWorld = Instantiate(worldPrefabs[_dataController.getCurrWorld() - 1], levelBaseGameObject.transform, false);
 		worldBaseGameObject.SetActive(false);
 		levelBaseGameObject.SetActive(true);
-		
+
 	}
 
 	public void BackToWorld()
@@ -65,7 +67,6 @@ public class MenuScreenController : MonoBehaviour
 	public void changeLvl()
 	{
 		lvlName.text = _dataController.GetLevelName(_dataController.getCurrLevel());
-		lvlDifficulty.text = "Difficulty: " + _dataController.GetLevelDifficulty(_dataController.getCurrLevel()).ToString();
 		lvlHighScore.text = "High Score: " + _dataController.GetHighestPlayerScore().ToString();
 	}
 
@@ -134,5 +135,10 @@ public class MenuScreenController : MonoBehaviour
 			backButton.SetActive(false);
 		}
 		updateWorldShown(currWorld);
+	}
+
+	public void loadDataButton()
+	{
+		_dataController.LoadGameData();
 	}
 }

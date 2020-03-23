@@ -70,6 +70,7 @@ public class TurnController : MonoBehaviour
 
     public void finishLvl()
     {
+        MenuScreenLoadParam.MenuLoadFromGame = true;
         SceneManager.LoadSceneAsync("MenuScreen");
     }
 }

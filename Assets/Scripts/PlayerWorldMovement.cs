@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class PlayerWorldMovement : MonoBehaviour
 {
-    [SerializeField] private Transform[] waypoints;
-
+    [SerializeField] private GameObject levelBaseGameObject;
+    [SerializeField] private MenuScreenController menuScreenController;
+    private LevelScript _levelScript;
+    
+    private Transform[] waypoints;
     private int currWaypointIdx = 0;
     private int currLoc;
     private bool isMoving = false;
     
     private Transform _playerTransform;
 
-    [SerializeField] private MenuScreenController _menuScreenController;
+
     // Start is called before the first frame update
     void Start()
     {
+        _levelScript = levelBaseGameObject.GetComponentInChildren<LevelScript>();
         _playerTransform = this.GetComponent<Transform>();
+        waypoints = _levelScript.getWaypoints();
     }
 
     // Update is called once per frame
@@ -71,6 +76,6 @@ public class PlayerWorldMovement : MonoBehaviour
 
         isMoving = false;
         currLoc = wayIdx;
-        _menuScreenController.showLevelPopup(currLoc);
+        menuScreenController.showLevelPopup(currLoc);
     }
 }

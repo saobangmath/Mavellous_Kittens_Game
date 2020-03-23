@@ -36,7 +36,7 @@ public class QuestionController : MonoBehaviour
         if (_dataController != null)
         {
             currentRoundData= _dataController.GetCurrentRoundData(_dataController.getCurrLevel());
-            for (int i = 0; i < currentRoundData.questions.Length; ++i)
+            for (int i = 0; i < currentRoundData.questions.Count; ++i)
             {
                 addQuestionData(i);
             }            
@@ -44,9 +44,9 @@ public class QuestionController : MonoBehaviour
         else
         {
             QnA testQ=new QnA();
-            testQ.questionText = "1+1=?";        //Test question to remove later
+            testQ.QuestionText = "1+1=?";        //Test question to remove later
             testQ.ansChoice = new string[] {"a. 1", "b. 2", "c. 3", "d. 4"};
-            testQ.correctAns = 2;
+            testQ.CorrectAns = 2;
             qData.Add(testQ);
         }
         timeRemaining = 20f;
@@ -74,7 +74,7 @@ public class QuestionController : MonoBehaviour
         {
             choiceButtons[i].GetComponent<Image>().sprite = baseButtonImage;
         }
-        questionTMP.text = qData[index].questionText;    //Changes the text of the question 
+        questionTMP.text = qData[index].QuestionText;    //Changes the text of the question 
         for (int i = 0; i < currentRoundData.questions[currQidx].ansChoice.Length; ++i)
         {
             choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = qData[index].ansChoice[i];     //Changes the text on answer buttons
@@ -88,12 +88,12 @@ public class QuestionController : MonoBehaviour
         {
             choiceButtons[i].interactable = false;
         }
-        if (choice != qData[currQidx].correctAns)        //Checks if the chosen answer is correct
+        if (choice != qData[currQidx].CorrectAns)        //Checks if the chosen answer is correct
         {
             choiceButtons[choice - 1].GetComponent<Image>().sprite = wrongButtonImage;
             for (int i = 0; i < choiceButtons.Length; ++i)
             {
-                if (i == qData[currQidx].correctAns - 1)
+                if (i == qData[currQidx].CorrectAns - 1)
                 {
                     choiceButtons[i].GetComponent<Image>().sprite = correctButtonImage;
                 }
@@ -118,7 +118,7 @@ public class QuestionController : MonoBehaviour
         isRoundActive = false;
         timeRemaining = 30f;
         currQidx++;
-        if (currQidx < currentRoundData.questions.Length)
+        if (currQidx < currentRoundData.questions.Count)
         {
             nextButton.SetActive(true);
         }
