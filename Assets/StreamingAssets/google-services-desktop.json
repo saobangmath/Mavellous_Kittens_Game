@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "942471948637",
+    "firebase_url": "https://marvellous-kittens.firebaseio.com",
+    "project_id": "marvellous-kittens",
+    "storage_bucket": "marvellous-kittens.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942471948637:android:da42b714f131bab218e0b4",
+        "android_client_info": {
+          "package_name": "com.UnityForce.MarvellousKittens"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942471948637-i2vg6skgrvjun1t3jpuglvthrtdr33ij.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqDxAuwN4aqgL4uT5QnR4plw7cHEumhF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942471948637-i2vg6skgrvjun1t3jpuglvthrtdr33ij.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
