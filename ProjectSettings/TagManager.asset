@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - LevelButton
+  - Waypoint
+  - Weapon
+  - EnemyWeapon
   layers:
   - Default
   - TransparentFX
@@ -13,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - IgnoredUI
   - 
   - 
   - 
@@ -40,4 +45,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2009876497
+    locked: 0
+  - name: Ground
+    uniqueID: 617610015
+    locked: 0
+  - name: Hills
+    uniqueID: 33636929
+    locked: 0
+  - name: Forest
+    uniqueID: 1021603125
+    locked: 0
+  - name: UI (Top)
+    uniqueID: 3535815207
+    locked: 0
+  - name: Player
+    uniqueID: 2109012063
     locked: 0
