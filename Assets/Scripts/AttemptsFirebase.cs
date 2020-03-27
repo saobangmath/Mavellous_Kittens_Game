@@ -17,6 +17,9 @@ public class AttemptsFirebase : MonoBehaviour
     public List<HighscoreEntry> highscoreEntryList;
     private Highscores highscores;
 
+    public string levelId = "1";
+    public int worldId = 5;
+
     public Transform entryContainer;
     public Transform entryTemplate;
     public List<Transform> highscoreEntryTransformList = new List<Transform>(10);
@@ -35,13 +38,12 @@ public class AttemptsFirebase : MonoBehaviour
     {
         await GetAttemptDataFirebase(); //initialised attemptList
         await GetUserData(); //initialised userList
-        Debug.Log(attemptList[0].score); //955 or 950
+        Debug.Log("Attempt count: " + attemptList.Count);
 
         CreateHighscoreEntryList();
 
         DisplayHighscoreInTable(highscoreEntryList);
 
-        Debug.Log("it works");
     }
 
     private void CreateDbReference()
@@ -57,9 +59,8 @@ public class AttemptsFirebase : MonoBehaviour
     public async Task GetAttemptDataFirebase()
     {
         //basically i only need the score and user id of that particular level
-        string levelID = "1";
-        await FirebaseDatabase.DefaultInstance.GetReference("Attempts").OrderByChild("levelId").EqualTo(levelID).
-            LimitToFirst(10).GetValueAsync().ContinueWith(task =>
+        await FirebaseDatabase.DefaultInstance.GetReference("Attempts").OrderByChild("levelId").EqualTo(levelId)
+            .GetValueAsync().ContinueWith(task =>
             {
                 if (task.IsFaulted)
                 {
@@ -69,6 +70,7 @@ public class AttemptsFirebase : MonoBehaviour
                 {
                     //it will return datasnapshot as a list
                     DataSnapshot test = task.Result;
+                    Debug.Log(test.GetRawJsonValue());
                     Debug.Log(test.ChildrenCount);
                     IEnumerator<DataSnapshot> childEnumerator = test.Children.GetEnumerator();
                     string json;
@@ -80,7 +82,10 @@ public class AttemptsFirebase : MonoBehaviour
 
                         json = child.GetRawJsonValue();
                         Attempt attempt1 = JsonUtility.FromJson<Attempt>(json);
-                        attemptList.Add(attempt1);
+                        if (attempt1.worldId == worldId) {
+                            attemptList.Add(attempt1);
+                        }
+                        
                     }
 
 
@@ -143,6 +148,7 @@ public class AttemptsFirebase : MonoBehaviour
     {
         //display objects on UI using template and container
         highscores = new Highscores(highscoreEntryList);
+        SortHighscores(highscores);
         int k = 0;
         foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
         {
