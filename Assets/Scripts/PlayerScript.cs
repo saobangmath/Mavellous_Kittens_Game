@@ -2,20 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class PlayerScript : MonoBehaviour
 {
+    [SerializeField] private HP_Bar bar;
+    [SerializeField] private GameObject enemy;
+    [SerializeField] private static int maxHP = 10;
+    [SerializeField] private GameObject[] weapon;
+    
+    private int _hp = maxHP;
+    private EnemyScript _enemyScript;
     private Animator _anim;
 
-    [SerializeField] private HP_Bar bar;
-
-    [SerializeField]
-    private GameObject enemy;
-    [SerializeField] private static int maxHP = 10;
-    [SerializeField] private GameObject weapon;
-    private int _hp = maxHP;
-
-    private EnemyScript _enemyScript;
+    public bool isAttacking = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +31,15 @@ public class PlayerScript : MonoBehaviour
 
     IEnumerator runAttack()
     {
-        _anim.SetTrigger("attack");
-        weapon.SetActive(true);
+        isAttacking = true;
+        int randomWeaponIdx = UnityEngine.Random.Range(0, weapon.Length);
+        GameObject temp=Instantiate(weapon[randomWeaponIdx], new Vector3(-1.5f,2,0), Quaternion.identity) as GameObject;
+        temp.SetActive(true);
         _enemyScript.DeactivateWeapon();
-        yield return null;
+        AnimatorStateInfo currAnimState = weapon[randomWeaponIdx].GetComponentInChildren<Animator>()
+            .GetCurrentAnimatorStateInfo(0);
+        yield return new WaitUntil(()=>temp==null);
+        isAttacking = false;
     }
 
     public void DecreaseHP()
@@ -54,6 +59,6 @@ public class PlayerScript : MonoBehaviour
 
     public void DeactivateWeapon()
     {
-        weapon.SetActive(false);
+        //Legacy Function TODO remove this function
     }
 }

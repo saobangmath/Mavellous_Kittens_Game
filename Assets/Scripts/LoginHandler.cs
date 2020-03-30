@@ -201,7 +201,7 @@ public class LoginHandler : MonoBehaviour
             if (registered) 
             {
                 Debug.Log("User has registered, proceed to home screen");
-                SceneManager.LoadSceneAsync("HomeScreen");
+                SceneManager.LoadSceneAsync("Persistent");
             }
             // New user
             else

@@ -18,6 +18,7 @@ public class EnemyScript : MonoBehaviour
     private int _hp;
     private PlayerScript _playerScript;
     private DataController _dataController;
+    public bool isAttacking = false;
     [SerializeField] private GameObject weapon;
 
     private bool complete = false;
@@ -31,7 +32,7 @@ public class EnemyScript : MonoBehaviour
         _dataController = FindObjectOfType<DataController>();
         if (_dataController != null) //Sanity check
         {
-            maxHP = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions.Count;
+            maxHP = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions.Count-1;
         }
 
         _hp = maxHP;
@@ -53,10 +54,12 @@ public class EnemyScript : MonoBehaviour
 
     IEnumerator runAttack()
     {
+        isAttacking = true;
         _anim.SetTrigger("attack");
         weapon.SetActive(true);
         _playerScript.DeactivateWeapon();
-        yield return null;
+        yield return new WaitForSeconds(_anim.GetCurrentAnimatorStateInfo(0).length);
+        isAttacking = false;
     }
 
     public void DecreaseHP()

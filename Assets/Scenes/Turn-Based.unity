@@ -915,7 +915,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Choice 1
+  m_text: Choice
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -984,10 +984,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 424699176}
-    characterCount: 8
+    characterCount: 6
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -1385,6 +1385,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1927859833}
   enemy: {fileID: 1841486155}
+  animatorList:
+  - {fileID: 9100000, guid: 2a7a4303796560947aad6be9f1f34e6b, type: 2}
+  - {fileID: 9100000, guid: 9032ecf4c448f2a41aa4359394f4615f, type: 2}
+  - {fileID: 9100000, guid: 694fb9fbc5759ff4fb4415cb8ae9e1a8, type: 2}
+  - {fileID: 9100000, guid: db84c1d9cba050b49998dbda66f57c9c, type: 2}
+  - {fileID: 9100000, guid: dae2a25835c72a54bb5c69b8cc746d5e, type: 2}
 --- !u!114 &622933921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1798,8 +1804,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1300, y: 2100}
+  m_AnchoredPosition: {x: 5.7, y: 114}
+  m_SizeDelta: {x: 1528, y: 2772.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &800083821
 MonoBehaviour:
@@ -1950,8 +1956,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2000, y: 2000}
+  m_AnchoredPosition: {x: 0, y: -114.2}
+  m_SizeDelta: {x: 2000, y: 3038.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &898947996
 MonoBehaviour:
@@ -3776,6 +3782,7 @@ MonoBehaviour:
   enemyAnim:
   - {fileID: 9100000, guid: 74aecfbf43d0e7844ab1d2523ce818d2, type: 2}
   - {fileID: 9100000, guid: 489643326f33eb248896423997f501f0, type: 2}
+  isAttacking: 0
   weapon: {fileID: 876952944}
 --- !u!61 &1841486160
 BoxCollider2D:
@@ -5774,6 +5781,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070538257872953365, guid: 2984152592ce7d14eb5976d0303fa362,
         type: 3}
+      propertyPath: weapon.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3070538257872953365, guid: 2984152592ce7d14eb5976d0303fa362,
+        type: 3}
       propertyPath: bar
       value: 
       objectReference: {fileID: 925623007}
@@ -5786,7 +5798,26 @@ PrefabInstance:
         type: 3}
       propertyPath: weapon
       value: 
-      objectReference: {fileID: 930148868}
+      objectReference: {fileID: 77287402015646534, guid: a423eb0a5bee4504c86330ea9af8ede5,
+        type: 3}
+    - target: {fileID: 3070538257872953365, guid: 2984152592ce7d14eb5976d0303fa362,
+        type: 3}
+      propertyPath: weapon.Array.data[0]
+      value: 
+      objectReference: {fileID: 1973964909680476983, guid: 0f5623748011f84479d07d3f88e4287f,
+        type: 3}
+    - target: {fileID: 3070538257872953365, guid: 2984152592ce7d14eb5976d0303fa362,
+        type: 3}
+      propertyPath: weapon.Array.data[1]
+      value: 
+      objectReference: {fileID: 394473349346125193, guid: 6a2ee30cc2c666d4fa9e4bd8bf56a147,
+        type: 3}
+    - target: {fileID: 3070538257872953365, guid: 2984152592ce7d14eb5976d0303fa362,
+        type: 3}
+      propertyPath: weapon.Array.data[2]
+      value: 
+      objectReference: {fileID: 2242831731433232814, guid: fafd3545dd35d7941b512122563ab9b0,
+        type: 3}
     - target: {fileID: 3070538257872953366, guid: 2984152592ce7d14eb5976d0303fa362,
         type: 3}
       propertyPath: m_Offset.x

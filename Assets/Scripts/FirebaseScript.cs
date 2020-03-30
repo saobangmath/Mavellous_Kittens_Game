@@ -5,23 +5,28 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Firebase;
+using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Unity.Editor;
+using TMPro;
 using UnityEngine;
 
 public class FirebaseScript : MonoBehaviour
 {
-    private string[] presetWorldList=new string[]{"world1", "world2", "world3", "world4", "world5"};
 
-
+    private string[] presetWorldList=new string[]{"300003", "300004", "300005", "300006", "300007"};
+    
     private DatabaseReference _reference;
     private DatabaseReference _worldReference;
     private DatabaseReference _levelReference;
     private DatabaseReference _questionReference;
+    private DatabaseReference _userReference;
 
 
     
     private worldData[] worldDataResult;
+    private User currentUser;
+    public bool isLoading = true;
     
     void Awake()
     {
@@ -30,8 +35,7 @@ public class FirebaseScript : MonoBehaviour
         _worldReference = _reference.Child("Worlds");
         _levelReference = _reference.Child("Levels");
         _questionReference = _reference.Child("Questions");
-        
-        
+        _userReference = _reference.Child("Users");
 
     }
 
@@ -46,29 +50,26 @@ public class FirebaseScript : MonoBehaviour
                 worldDataResult[i]=new worldData();
             }
         }
+
+
         
         await LoadGameData();
-        
+        isLoading = false;
+
         Debug.Log("Data Finished Loading");
     }
 
+
+
     public worldData[] GetWorldData()
     {
-        if (worldDataResult[0] == null)
-        {
-            Debug.Log("getWorldData0 null");
-        }
-        else if (worldDataResult[0].WorldName == null)
-        {
-            Debug.Log("worldDataResult name null");
-        }
-        else if (worldDataResult[0].LvlData[0].name == null)
-        {
-            Debug.Log("worldDataResult.LvlData.name null");
-        }
         return worldDataResult;
     }
-    
+
+    public User GetUserData()
+    {
+        return currentUser;
+    }
     
 
     public async Task LoadGameData()
@@ -93,54 +94,51 @@ public class FirebaseScript : MonoBehaviour
                 //Get enumerator for _worldReference's children node (list of worlds)
                 IEnumerator<DataSnapshot> worldEnumerator = task.Result.Children.GetEnumerator();
                 
+                //Var to track current world being loaded
+                int wldIdx = 0;
+                
                 //Iterates through all child
                 while (worldEnumerator.MoveNext())
                 {
                     DataSnapshot world = worldEnumerator.Current;
                     
-                    //Process only preset world's data (custom level is handled by other function)
-                    if (presetWorldList.Contains(world.Key))
-                    {
+                    //Var to track current level being loaded
+                    int lvlIdx = 0;
 
-                        //Var to track current level being loaded
-                        int wldIdx = 0;
-                        int lvlIdx = 0;
-                        
-                        //Get enumerator for the chosen world's child (list of levels)
-                        IEnumerator<DataSnapshot> childEnumerator = world.Children.GetEnumerator();
-                        while (childEnumerator.MoveNext())
+                    //Get enumerator for the chosen world's child (list of levels)
+                    IEnumerator<DataSnapshot> childEnumerator = world.Children.GetEnumerator();
+                    while (childEnumerator.MoveNext())
+                    {
+                        DataSnapshot lvl = childEnumerator.Current;
+
+                        //Special case for "wld", the world name
+                        if (lvl.Key == "wld")
                         {
-                            DataSnapshot lvl = childEnumerator.Current;
-                            
-                            //Special case for "wld", the world name
-                            if (lvl.Key == "wld")
-                            {
-                                worldTemp.WorldName = lvl.Value.ToString();
-                            }
-                            else
-                            {
-                                RoundData lvlTemp = LoadLevelData(lvl.Value.ToString()).Result;
-                                Debug.Log(lvlTemp.name);
-                                Debug.Log(lvlTemp.questions.Count.ToString());
-                                lvlCol[lvlIdx].name = lvlTemp.name;
-                                lvlCol[lvlIdx].questions = lvlTemp.questions;
-                                ++lvlIdx;
-                            }
+                            worldTemp.WorldName = lvl.Value.ToString();
                         }
-                        Debug.Log("lvlcol name: "+lvlCol[0].name);
-                        for (int i = 0; i < lvlCol.Length; ++i)
+                        else
                         {
-                            worldTemp.LvlData[i].name = lvlCol[i].name;
-                            worldTemp.LvlData[i].questions = lvlCol[i].questions;
+                            RoundData lvlTemp = LoadLevelData(lvl.Value.ToString()).Result;
+                            lvlCol[lvlIdx].name = lvlTemp.name;
+                            lvlCol[lvlIdx].questions = lvlTemp.questions;
+                            ++lvlIdx;
                         }
-                        Debug.Log("worldTemp lvl name:"+worldTemp.LvlData[0].name);
-                        worldDataResult[wldIdx] = worldTemp;
-                        Debug.Log("worldResult lvl name: "+ worldDataResult[wldIdx].LvlData[0].name);
-                        ++wldIdx;
                     }
+
+                    for (int i = 0; i < lvlCol.Length; ++i)
+                    {
+                        worldTemp.LvlData[i].name = lvlCol[i].name;
+                        worldTemp.LvlData[i].questions = lvlCol[i].questions;
+                    }
+
+                    worldDataResult[wldIdx] = worldTemp;
+                    Debug.Log("World #" + wldIdx + " loaded");
+                    wldIdx++;
                 }
             }
         });
+        
+        currentUser = await LoadUserData();
     }
 
 
@@ -160,8 +158,6 @@ public class FirebaseScript : MonoBehaviour
                 //Debug.Log(lvlName + " : " + lvl.ChildrenCount.ToString());
                 IEnumerator<DataSnapshot> childEnumerator = lvl.Children.GetEnumerator();
 
-                //int qIdx = 0;
-                
                 //Iterates through all questions
                 while (childEnumerator.MoveNext())
                 {
@@ -174,18 +170,14 @@ public class FirebaseScript : MonoBehaviour
                     }else if (question.Key == "lv")
                     {
                         lvlResult.name = question.Value.ToString();
-                        Debug.Log("in: "+lvlResult.name);
                     }
                     else
                     {
                         lvlResult.questions.Add(LoadQuestionData(question.Value.ToString()).Result);
-                        //++qIdx;
                     }
                 }
             }
         });
-        Debug.Log("out: "+lvlResult.name);
-        Debug.Log("q: "+lvlResult.questions[0].QuestionText);
         return lvlResult;
     }
 
@@ -206,7 +198,6 @@ public class FirebaseScript : MonoBehaviour
                 IEnumerator<DataSnapshot> childEnumerator = question.Children.GetEnumerator();
 
                 int ansIdx = 0;
-                Debug.Log(questionName);
                 //Iterates through all question components
                 while (childEnumerator.MoveNext())
                 {
@@ -215,12 +206,10 @@ public class FirebaseScript : MonoBehaviour
                     //Special cases for "qn", the question itself and the correct answer
                     if (questionComponent.Key == "qn")
                     {
-                        Debug.Log("questiontxt");
                         questionResult.QuestionText=questionComponent.Value.ToString();
                     }
                     else if (questionComponent.Key == "correct")
                     {
-                        Debug.Log("ansnum");
                         questionResult.CorrectAns = int.Parse(questionComponent.Value.ToString());
                     }
                     else if (questionComponent.Key == "difficulty")
@@ -229,7 +218,6 @@ public class FirebaseScript : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("questionchoice");
                         questionResult.ansChoice[ansIdx] = questionComponent.Value.ToString();
                         ++ansIdx;
                     }
@@ -238,4 +226,36 @@ public class FirebaseScript : MonoBehaviour
         });
         return questionResult;
     }
+    public async Task<User> LoadUserData()
+    {
+        User userResult = new User();
+        Debug.Log("I'm in");
+        await _userReference.OrderByKey().GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsFaulted)
+            {
+                Debug.Log("Get User faulted");
+            }
+            else if(task.IsCompleted)
+            {
+                Debug.Log("Get User in");
+                if (FirebaseAuth.DefaultInstance.CurrentUser != null)
+                {
+                    var userNode = task.Result.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+
+                    userResult.usr = userNode.Child("usr").Value.ToString();
+                    userResult.llv = userNode.Child("llv").Value.ToString();
+                    userResult.chr = userNode.Child("chr").Value.ToString();  
+                }
+                else
+                {
+                    userResult.usr = "siaii";
+                    userResult.llv = "1";
+                    userResult.chr = "pipo-nekonin004";
+                }
+            }
+        });
+        return userResult;
+    }
+    
 }

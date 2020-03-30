@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,9 +13,13 @@ public class TurnController : MonoBehaviour
 
     [SerializeField] private GameObject enemy;
 
+    [SerializeField] private AnimatorController[] animatorList;
+
     private EnemyScript _enemyScript;
     private PlayerScript _playerScript;
 
+    private DataController _dataController;
+    
     private bool attacking = false;
 
     private QuestionController _questionController;
@@ -24,6 +29,13 @@ public class TurnController : MonoBehaviour
         _enemyScript = enemy.GetComponent<EnemyScript>();
         _playerScript = player.GetComponent<PlayerScript>();
         _questionController = GetComponent<QuestionController>();
+
+        _dataController = FindObjectOfType<DataController>();
+        
+        int chrIdx = int.Parse(_dataController.currentUser.chr.Substring(12, 3));
+        //TODO Create all character's animation
+        
+        player.GetComponent<Animator>().runtimeAnimatorController = animatorList[chrIdx-1];
     }
 
     // Update is called once per frame
@@ -54,8 +66,8 @@ public class TurnController : MonoBehaviour
 
     IEnumerator delayedEnemyAttack()
     {
-        _enemyScript.StartCoroutine("runAttack");   
-        yield return new WaitForSeconds(2.1f);        //Delay until the animation is finished
+        _enemyScript.StartCoroutine("runAttack");
+        yield return new WaitUntil(() => _enemyScript.isAttacking == false);        //Delay until the animation is finished
         attacking = false;
         _questionController.EndRound();
     }
@@ -63,7 +75,7 @@ public class TurnController : MonoBehaviour
     IEnumerator delayedPlayerAttack()
     {
         _playerScript.StartCoroutine("runAttack");
-        yield return new WaitForSeconds(3.2f);    //Delay until the animation is finished
+        yield return new WaitUntil(() => _playerScript.isAttacking == false);    //Delay until the animation is finished
         attacking = false;
         _questionController.EndRound();
     }

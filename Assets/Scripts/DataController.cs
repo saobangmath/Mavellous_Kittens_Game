@@ -1,24 +1,32 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.IO;
+using System.Threading.Tasks;
 using Firebase;
+using TMPro;
+using UnityEngine.Serialization;
 
 // The System.IO namespace contains functions related to loading and saving files
 [RequireComponent(typeof(FirebaseScript))]
 
 public class DataController : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI loadingText;
+    
     private worldData[] allWorldData;
     
     private worldData allRoundData;
-    private PlayerProgress playerProgress;
+    private PlayerProgress playerProgress; 
+    public User currentUser;
 
     private FirebaseScript _firebaseScript;
 
     private string gameDataFileName = "data.json";
     private int currLevel = 1;
     private int currWorld = 1;
+    private bool loadingFinished = false;
 
     public int getCurrWorld()
     {
@@ -48,9 +56,25 @@ public class DataController : MonoBehaviour
         _firebaseScript = GetComponent<FirebaseScript>();
 
         LoadPlayerProgress();
-
-        SceneManager.LoadScene("MenuScreen");
+        
     }
+
+    private void Update()
+    {
+        if (!loadingFinished)
+        {
+            loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, Mathf.PingPong(Time.time, 1));
+
+            if (_firebaseScript.isLoading == false)
+            {
+                loadingFinished = true;
+                Debug.Log("Getting User Data");
+                currentUser = _firebaseScript.GetUserData();
+                SceneManager.LoadSceneAsync("MenuScreen");
+            }            
+        }
+    }
+    
 
     public RoundData GetCurrentRoundData(int currLvl)
     {
@@ -59,7 +83,7 @@ public class DataController : MonoBehaviour
         
         return allRoundData.LvlData[currLvl-1];
     }
-
+    
     public void SubmitNewPlayerScore(int newScore)
     {
         // If newScore is greater than playerProgress.highestScore, update playerProgress with the new value and call SavePlayerProgress()
@@ -71,11 +95,6 @@ public class DataController : MonoBehaviour
     }
 
     public string GetLevelName(int currLvl) {
-        if (allRoundData == null)
-        {
-            Debug.Log("Was here");
-            LoadWorldData(currWorld);
-        }
         return allRoundData.LvlData[currLvl-1].name;
     }
 
@@ -86,36 +105,12 @@ public class DataController : MonoBehaviour
     
     public void LoadGameData()
     {
-        /*
-        // Path.Combine combines strings into a file path
-        // Application.StreamingAssets points to Assets/StreamingAssets in the Editor, and the StreamingAssets folder in a build
-        string filePath = Path.Combine(Application.streamingAssetsPath, gameDataFileName);
-
-        if(File.Exists(filePath))
-        {
-            // Read the json from the file into a string
-            string dataAsJson = File.ReadAllText(filePath);
-            // Pass the json to JsonUtility, and tell it to create a GameData object from it
-            GameData loadedData = JsonUtility.FromJson<GameData>(dataAsJson);
-
-            // Retrieve the allRoundData property of loadedData
-            allRoundData = loadedData.allRoundData;
-        }
-        else
-        {
-            Debug.LogError("Cannot load game data!");
-        }*/
-
         allWorldData = _firebaseScript.GetWorldData();
         LoadWorldData(currWorld);
     }
 
     void LoadWorldData(int wldIdx)
     {
-        if (allWorldData == null)
-        {
-            LoadGameData();
-        }
         allRoundData = allWorldData[wldIdx-1];
     }
 

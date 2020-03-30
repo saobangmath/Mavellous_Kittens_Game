@@ -17,6 +17,26 @@
             <e p="Read Me.txt" t="Include" />
           </e>
         </e>
+        <e p="FacebookSDK" t="Include">
+          <e p="Examples" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="ConsoleBase.cs" t="Include" />
+              <e p="LogView.cs" t="Include" />
+              <e p="MenuBase.cs" t="Include" />
+              <e p="SubMenus" t="Include">
+                <e p="AccessTokenMenu.cs" t="Include" />
+                <e p="AppEvents.cs" t="Include" />
+                <e p="AppLinks.cs" t="Include" />
+                <e p="AppRequests.cs" t="Include" />
+                <e p="DialogShare.cs" t="Include" />
+                <e p="GraphRequest.cs" t="Include" />
+                <e p="MainMenu.cs" t="Include" />
+                <e p="Pay.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="link.xml" t="Include" />
+        </e>
         <e p="Firebase" t="Include">
           <e p="m2repository" t="Include">
             <e p="com" t="Include">
@@ -36,6 +56,19 @@
             </e>
           </e>
         </e>
+        <e p="GoogleSignIn" t="Include">
+          <e p="Future.cs" t="Include" />
+          <e p="GoogleSignIn.cs" t="Include" />
+          <e p="GoogleSignInConfiguration.cs" t="Include" />
+          <e p="GoogleSignInStatusCode.cs" t="Include" />
+          <e p="GoogleSignInUser.cs" t="Include" />
+          <e p="Impl" t="Include">
+            <e p="BaseObject.cs" t="Include" />
+            <e p="GoogleSignInImpl.cs" t="Include" />
+            <e p="NativeFuture.cs" t="Include" />
+            <e p="SignInHelperObject.cs" t="Include" />
+          </e>
+        </e>
         <e p="Plugins" t="Include">
           <e p="GitHub" t="Include">
             <e p="Editor" t="Include">
@@ -48,13 +81,16 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="CameraControl.cs" t="Include" />
+          <e p="CharacterSelectionHandler.cs" t="Include" />
           <e p="CloudPingPong.cs" t="Include" />
           <e p="DataController.cs" t="Include" />
           <e p="EnemyScript.cs" t="Include" />
+          <e p="FirebaseHandler.cs" t="Include" />
           <e p="FirebaseScript.cs" t="Include" />
           <e p="GameData.cs" t="Include" />
           <e p="HP_Bar.cs" t="Include" />
           <e p="LevelScript.cs" t="Include" />
+          <e p="LoginHandler.cs" t="Include" />
           <e p="MenuScreenController.cs" t="Include" />
           <e p="MenuScreenLoadParam.cs" t="Include" />
           <e p="PlayerProgress.cs" t="Include" />
@@ -64,6 +100,13 @@
           <e p="QuestionController.cs" t="Include" />
           <e p="RoundData.cs" t="Include" />
           <e p="TurnController.cs" t="Include" />
+          <e p="User.cs" t="Include" />
+          <e p="UsernameInputHandler.cs" t="Include" />
+          <e p="Weapon Script" t="Include">
+            <e p="FireballScript.cs" t="Include" />
+            <e p="LightningScript.cs" t="Include" />
+            <e p="WhirlwindScript.cs" t="Include" />
+          </e>
           <e p="worldData.cs" t="Include" />
         </e>
         <e p="TextMesh Pro" t="Include">

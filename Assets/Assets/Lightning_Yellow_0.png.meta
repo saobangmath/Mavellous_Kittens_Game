@@ -1,0 +1,415 @@
+fileFormatVersion: 2
+guid: 69bcf03859e6fc44d9435cd4bcef5a56
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4126833051838589654
+    second: Lightning_Yellow_0_0
+  - first:
+      213: -916175552930404679
+    second: Lightning_Yellow_0_1
+  - first:
+      213: 8410952026812332775
+    second: Lightning_Yellow_0_2
+  - first:
+      213: -7190250733121589791
+    second: Lightning_Yellow_0_3
+  - first:
+      213: -3318884903939384506
+    second: Lightning_Yellow_0_4
+  - first:
+      213: 4852987318891563093
+    second: Lightning_Yellow_0_5
+  - first:
+      213: -5263145972697099817
+    second: Lightning_Yellow_0_6
+  - first:
+      213: -1329454744553810573
+    second: Lightning_Yellow_0_7
+  - first:
+      213: -4561473284941695480
+    second: Lightning_Yellow_0_8
+  - first:
+      213: -5928206128802061842
+    second: Lightning_Yellow_0_9
+  - first:
+      213: 3082675532926156181
+    second: Lightning_Yellow_0_10
+  - first:
+      213: -3848205062795117685
+    second: Lightning_Yellow_0_11
+  - first:
+      213: -3181019743078456808
+    second: Lightning_Yellow_0_12
+  - first:
+      213: -3212256585406320955
+    second: Lightning_Yellow_0_13
+  - first:
+      213: -2254737754464807150
+    second: Lightning_Yellow_0_14
+  - first:
+      213: 3671444863608236842
+    second: Lightning_Yellow_0_15
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 325
+        width: 34
+        height: 21
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a25d1d9443b8ab6c0800000000000000
+      internalID: -4126833051838589654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_1
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 295
+        width: 39
+        height: 51
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b6afaf40371943f0800000000000000
+      internalID: -916175552930404679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_2
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 265
+        width: 59
+        height: 81
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ea30052e44b9b470800000000000000
+      internalID: 8410952026812332775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_3
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 235
+        width: 62
+        height: 111
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1edab46cd09173c90800000000000000
+      internalID: -7190250733121589791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_4
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 205
+        width: 62
+        height: 141
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64b594a93c3f0f1d0800000000000000
+      internalID: -3318884903939384506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_5
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 185
+        width: 62
+        height: 161
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 558c10a1146495340800000000000000
+      internalID: 4852987318891563093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_6
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 150
+        width: 25
+        height: 20
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d19c588f9c85f6b0800000000000000
+      internalID: -5263145972697099817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_7
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 120
+        width: 78
+        height: 50
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37599ed14f3dc8de0800000000000000
+      internalID: -1329454744553810573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_8
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 90
+        width: 80
+        height: 80
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 806bd9e073462b0c0800000000000000
+      internalID: -4561473284941695480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_9
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 60
+        width: 80
+        height: 110
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee1a5715fe7cabda0800000000000000
+      internalID: -5928206128802061842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_10
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 30
+        width: 87
+        height: 140
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59df9d1801dd7ca20800000000000000
+      internalID: 3082675532926156181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lightning_Yellow_0_11
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 21
+        width: 87
+        height: 149
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8bbc3152ed689ac0800000000000000
+      internalID: -3848205062795117685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -9,7 +9,7 @@ public class PlayerWorldMovement : MonoBehaviour
     private LevelScript _levelScript;
     
     private Transform[] waypoints;
-    private int currWaypointIdx = 0;
+    private int currWaypointIdx;
     private int currLoc;
     private bool isMoving = false;
     
@@ -22,12 +22,22 @@ public class PlayerWorldMovement : MonoBehaviour
         _levelScript = levelBaseGameObject.GetComponentInChildren<LevelScript>();
         _playerTransform = this.GetComponent<Transform>();
         waypoints = _levelScript.getWaypoints();
+        currWaypointIdx = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void setWaypoints()
     {
-        
+        _levelScript = levelBaseGameObject.GetComponentInChildren<LevelScript>();
+        waypoints = _levelScript.getWaypoints();
+    }
+
+    public void resetPlayer()
+    {
+        currWaypointIdx = 0;
+        currLoc = 0;
+        isMoving = false;
+        transform.position = waypoints[0].position;
     }
     
     public int getCurrLoc()
@@ -39,6 +49,7 @@ public class PlayerWorldMovement : MonoBehaviour
     {
         if (!isMoving)
         {
+            Debug.Log("pressed");
             isMoving = true;
             StartCoroutine(moveToWaypoint(wayIdx));            
         }
@@ -52,6 +63,7 @@ public class PlayerWorldMovement : MonoBehaviour
         float t;
         while (currWaypointIdx!=(wayIdx-1)*3)
         {
+            Debug.Log("inside while loop");
             origPos = _playerTransform.position;
             t = 0;
             
@@ -69,7 +81,7 @@ public class PlayerWorldMovement : MonoBehaviour
                 currPos = Vector3.Lerp(origPos, waypoints[currWaypointIdx].position, t);
                 _playerTransform.position = currPos;
                 t += 0.05f;
-                yield return new WaitForSeconds(0.02f);
+                yield return new WaitForSeconds(0.015f);
             }
 
         }

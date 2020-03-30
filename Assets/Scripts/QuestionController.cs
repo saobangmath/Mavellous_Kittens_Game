@@ -21,7 +21,7 @@ public class QuestionController : MonoBehaviour
     [SerializeField] private Sprite baseButtonImage;
     [SerializeField] private Sprite correctButtonImage;
     [SerializeField] private Sprite wrongButtonImage;
-    private int currQidx = 0;
+    private int currQidx = 1;
     private int score = 0;
     private bool isRoundActive = false;
     private float timeRemaining;
@@ -75,7 +75,7 @@ public class QuestionController : MonoBehaviour
             choiceButtons[i].GetComponent<Image>().sprite = baseButtonImage;
         }
         questionTMP.text = qData[index].QuestionText;    //Changes the text of the question 
-        for (int i = 0; i < currentRoundData.questions[currQidx].ansChoice.Length; ++i)
+        for (int i = 0; i < currentRoundData.questions[index].ansChoice.Length; ++i)
         {
             choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = qData[index].ansChoice[i];     //Changes the text on answer buttons
         }
@@ -84,6 +84,7 @@ public class QuestionController : MonoBehaviour
     
     public void CheckAns(int choice)
     {
+        isRoundActive = false;
         for (int i = 0; i < currentRoundData.questions[currQidx].ansChoice.Length; ++i)
         {
             choiceButtons[i].interactable = false;

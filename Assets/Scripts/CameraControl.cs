@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(Camera))]
 public class CameraControl : MonoBehaviour
 {
+    [SerializeField] private GameObject levelBaseGameObject;
     private Camera _camera;
     private float panSpeed = 10f;
     private Vector3 pointerPosLastFrame;
@@ -23,13 +24,16 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchSupported)
+        if (levelBaseGameObject.activeSelf)
         {
-            TouchControl();
-        }
-        else
-        {
-            MouseControl();
+            if (Input.touchSupported)
+            {
+                TouchControl();
+            }
+            else
+            {
+                MouseControl();
+            }   
         }
     }
 
@@ -53,7 +57,7 @@ public class CameraControl : MonoBehaviour
                 Vector3 pos = transform.position;
                 Vector3 offset = pointerPosLastFrame - pointerPosThisFrame;
 
-                pos.y += offset.y * 2 * Time.deltaTime;
+                pos.y += offset.y * Time.deltaTime;
                 pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
                 transform.position = pos;

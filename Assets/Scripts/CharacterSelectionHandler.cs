@@ -40,7 +40,7 @@ public class CharacterSelectionHandler : MonoBehaviour
     {
         FirebaseHandler.SaveCharacter(spriteArr[characterIndex]);
         FirebaseHandler.WriteNewUser();
-        SceneManager.LoadSceneAsync("HomeScreen");
+        SceneManager.LoadSceneAsync("Persistent");
     }
 
     public void OnClickBackButton()
