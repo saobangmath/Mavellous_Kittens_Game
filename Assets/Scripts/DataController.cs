@@ -18,7 +18,6 @@ public class DataController : MonoBehaviour
     private worldData[] allWorldData;
     
     private worldData allRoundData;
-    private PlayerProgress playerProgress; 
     public User currentUser;
 
     private FirebaseScript _firebaseScript;
@@ -74,20 +73,7 @@ public class DataController : MonoBehaviour
 
     public RoundData GetCurrentRoundData(int currLvl)
     {
-        // If we wanted to return different rounds, we could do that here
-        // We could store an int representing the current round index in PlayerProgress
-        
         return allRoundData.LvlData[currLvl-1];
-    }
-    
-    public void SubmitNewPlayerScore(int newScore)
-    {
-        // If newScore is greater than playerProgress.highestScore, update playerProgress with the new value and call SavePlayerProgress()
-        if(newScore > playerProgress.highestScore)
-        {
-            playerProgress.highestScore = newScore;
-            SavePlayerProgress();
-        }
     }
 
     public string GetLevelName(int currLvl) {
@@ -98,6 +84,7 @@ public class DataController : MonoBehaviour
     {
         allWorldData = _firebaseScript.GetWorldData();
         LoadWorldData(currWorld);
+        
     }
 
     void LoadWorldData(int wldIdx)
@@ -105,10 +92,4 @@ public class DataController : MonoBehaviour
         allRoundData = allWorldData[wldIdx-1];
     }
     
-    // This function could be extended easily to handle any additional data we wanted to store in our PlayerProgress object
-    private void SavePlayerProgress()
-    {
-        // Save the value playerProgress.highestScore to PlayerPrefs, with a key of "highestScore"
-        PlayerPrefs.SetInt("highestScore", playerProgress.highestScore);
-    }
 }

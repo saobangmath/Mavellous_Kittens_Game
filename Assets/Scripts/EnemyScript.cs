@@ -19,7 +19,6 @@ public class EnemyScript : MonoBehaviour
     private DataController _dataController;
     public bool isAttacking = false;
     [SerializeField] private GameObject weapon;
-
     private bool complete = false;
     // Start is called before the first frame update
     void Start()
@@ -31,7 +30,7 @@ public class EnemyScript : MonoBehaviour
         _dataController = FindObjectOfType<DataController>();
         if (_dataController != null) //Sanity check
         {
-            maxHP = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions.Count-1;
+            maxHP = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions.Count;
         }
 
         _hp = maxHP;
@@ -40,6 +39,7 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //For debugging purposes
         if (Input.GetKey(KeyCode.Space))
         {
             _anim.SetTrigger("attack");
@@ -56,7 +56,8 @@ public class EnemyScript : MonoBehaviour
         isAttacking = true;
         _anim.SetTrigger("attack");
         weapon.SetActive(true);
-        _playerScript.DeactivateWeapon();
+        
+        //Wait until the attack animation is finished
         yield return new WaitForSeconds(_anim.GetCurrentAnimatorStateInfo(0).length);
         isAttacking = false;
     }

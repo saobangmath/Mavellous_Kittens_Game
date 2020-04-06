@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour
 {
     [SerializeField] private HP_Bar bar;
     [SerializeField] private GameObject enemy;
-    [SerializeField] private static int maxHP = 10;
+    [SerializeField] private static int maxHP = 3;
     [SerializeField] private GameObject[] weapon;
     
     private int _hp = maxHP;
@@ -23,21 +23,16 @@ public class PlayerScript : MonoBehaviour
         _enemyScript = enemy.GetComponent<EnemyScript>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator runAttack()
     {
         isAttacking = true;
+        
+        //Spawns different weapon to attack enemy
         int randomWeaponIdx = UnityEngine.Random.Range(0, weapon.Length);
         GameObject temp=Instantiate(weapon[randomWeaponIdx], new Vector3(-1.5f,2,0), Quaternion.identity) as GameObject;
         temp.SetActive(true);
-        _enemyScript.DeactivateWeapon();
-        AnimatorStateInfo currAnimState = weapon[randomWeaponIdx].GetComponentInChildren<Animator>()
-            .GetCurrentAnimatorStateInfo(0);
+        
+        //Wait until the weapon hits enemy and is destroyed
         yield return new WaitUntil(()=>temp==null);
         isAttacking = false;
     }
@@ -46,7 +41,7 @@ public class PlayerScript : MonoBehaviour
     {
         _anim.SetTrigger("hit");
         bar.StartCoroutine(bar.UpdateBar((float)_hp / (float)maxHP, (float)(_hp - 1) / (float)maxHP));
-        _hp -= 1;        
+        _hp -= 1;
     }
 
     public void OnCollisionEnter2D(Collision2D other)
@@ -57,8 +52,8 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void DeactivateWeapon()
+    public int GetCurrentHp()
     {
-        //Legacy Function TODO remove this function
+        return _hp;
     }
 }

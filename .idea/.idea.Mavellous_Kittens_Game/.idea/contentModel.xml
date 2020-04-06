@@ -101,6 +101,7 @@
           <e p="LoginHandler.cs" t="Include" />
           <e p="MenuScreenController.cs" t="Include" />
           <e p="MenuScreenLoadParam.cs" t="Include" />
+          <e p="MusicObjectScript.cs" t="Include" />
           <e p="PlayerProgress.cs" t="Include" />
           <e p="PlayerScript.cs" t="Include" />
           <e p="PlayerWorldMovement.cs" t="Include" />

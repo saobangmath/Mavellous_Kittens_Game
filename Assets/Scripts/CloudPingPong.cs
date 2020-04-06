@@ -25,7 +25,8 @@ public class CloudPingPong : MonoBehaviour
     }
 
     private IEnumerator PingPong()
-    {
+    {   
+        //Makes the cloud go back and forth in the background
         pos.x = minX + len * Mathf.Lerp(0, 40, t) / 40;
         if (goRight)
         {

@@ -14,7 +14,7 @@ public class WhirlwindScript : MonoBehaviour
         void Update()
         {
                 Vector3 _nextPos = _currPos.position;
-                _nextPos.x += 3f *Time.deltaTime;
+                _nextPos.x += 3.75f *Time.deltaTime;
                 transform.position = _nextPos;
         }
 

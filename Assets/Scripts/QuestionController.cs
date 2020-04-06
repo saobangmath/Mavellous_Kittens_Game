@@ -21,10 +21,11 @@ public class QuestionController : MonoBehaviour
     [SerializeField] private GameObject nextButton;
     [SerializeField] private TextMeshProUGUI timeRemainingDisplay;
     [SerializeField] private GameObject levelFinishPrompt;
+    [SerializeField] private TextMeshProUGUI levelFinishTxt;
     [SerializeField] private Sprite baseButtonImage;
     [SerializeField] private Sprite correctButtonImage;
     [SerializeField] private Sprite wrongButtonImage;
-    private int currQidx = 1;
+    private int currQidx = 0;
     private int score = 0;
     private bool isRoundActive = false;
     private float timeRemaining;
@@ -125,7 +126,9 @@ public class QuestionController : MonoBehaviour
         isRoundActive = false;
         timeRemaining = 30f;
         currQidx++;
-        if (currQidx < currentRoundData.questions.Count)
+        //If there are still questions in the level and the player is still alive
+        Debug.Log(_turnController.GetPlayerHP());
+        if (currQidx < currentRoundData.questions.Count && _turnController.GetPlayerHP()>1)
         {
             nextButton.SetActive(true);
         }
@@ -156,11 +159,16 @@ public class QuestionController : MonoBehaviour
     {
         PostScore();
         levelFinishPrompt.SetActive(true);
+        if (_turnController.GetPlayerHP() == 1)
+        {
+            levelFinishTxt.text = "You Lose!";
+        }
         levelFinishPrompt.GetComponentInChildren<TextMeshProUGUI>().text = "Score: "+score.ToString();
     }
 
     private void PostScore()
     {
+        //If current user is the debug user
         if (_dataController.currentUser.usr != "siaii" && _dataController.currentUser.llv != "pipo-nekonin002")
         {
             Attempt currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getCurrLevel(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);

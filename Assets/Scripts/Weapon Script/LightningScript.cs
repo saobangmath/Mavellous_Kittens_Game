@@ -17,7 +17,7 @@ public class LightningScript : MonoBehaviour
     void Update()
     {
         Vector3 _nextPos = _currPos.position;
-        _nextPos.x += 4f *Time.deltaTime;
+        _nextPos.x += 4.5f *Time.deltaTime;
         transform.position = _nextPos;
     }
 

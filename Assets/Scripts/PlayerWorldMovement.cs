@@ -22,8 +22,9 @@ public class PlayerWorldMovement : MonoBehaviour
         _levelScript = levelBaseGameObject.GetComponentInChildren<LevelScript>();
         _playerTransform = this.GetComponent<Transform>();
         waypoints = _levelScript.getWaypoints();
-        transform.position = waypoints[0].position;
-        currWaypointIdx = 0;
+        transform.position = waypoints[(MenuScreenLoadParam.currentLevel-1)*3].position;
+        currWaypointIdx = (MenuScreenLoadParam.currentLevel-1)*3;
+        currLoc = MenuScreenLoadParam.currentLevel;
     }
 
 
@@ -35,22 +36,18 @@ public class PlayerWorldMovement : MonoBehaviour
 
     public void resetPlayer()
     {
+        //Resets player position to default
         currWaypointIdx = 0;
         currLoc = 0;
         isMoving = false;
         transform.position = waypoints[0].position;
     }
-    
-    public int getCurrLoc()
-    {
-        return currLoc;
-    }
 
     public void movePlayer(int wayIdx)
     {
+        //Checks if the player is currently moving
         if (!isMoving)
         {
-            Debug.Log("pressed");
             isMoving = true;
             StartCoroutine(moveToWaypoint(wayIdx));            
         }
@@ -62,6 +59,8 @@ public class PlayerWorldMovement : MonoBehaviour
         Vector3 currPos = _playerTransform.position;
         Vector3 origPos;
         float t;
+        
+        //While the character haven't arrived to the intended destination (3 waypoints inbetween levels)
         while (currWaypointIdx!=(wayIdx-1)*3)
         {
             origPos = _playerTransform.position;
@@ -69,19 +68,22 @@ public class PlayerWorldMovement : MonoBehaviour
             
             if (currLoc < wayIdx)
             {
+                //If going to level larger than the current
                 ++currWaypointIdx;
             }
             else if (currLoc > wayIdx)
             {
+                //If going to level smaller than the current
                 --currWaypointIdx;
             }
             
             while (currPos != waypoints[currWaypointIdx].position)
             {
+                //Moves the player from one waypoint to the next one smoothly
                 currPos = Vector3.Lerp(origPos, waypoints[currWaypointIdx].position, t);
                 _playerTransform.position = currPos;
-                t += 0.05f;
-                yield return new WaitForSeconds(0.015f);
+                t += 3f * Time.deltaTime;
+                yield return new WaitForSeconds(0.0001f);
             }
 
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -21,10 +22,12 @@ public class TurnController : MonoBehaviour
     private DataController _dataController;
     
     private bool attacking = false;
+    private int playerHP=3;
 
     private QuestionController _questionController;
 
     private EnemyAnimatorMap _enemyAnimatorMap;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,14 +37,18 @@ public class TurnController : MonoBehaviour
         _enemyAnimatorMap = GetComponent<EnemyAnimatorMap>();
         _dataController = FindObjectOfType<DataController>();
         
+        //Gets player character and enemy character info
         int chrIdx = int.Parse(_dataController.currentUser.chr.Substring(12, 3));
         string enemyName = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).boss;
         
+        //Displays player character according to the player's choice
         player.GetComponent<Animator>().runtimeAnimatorController = animatorList[chrIdx-1];
-        Debug.Log("Enemy: "+enemyName);
+        
+        //Displays the enemy character based on the level data
         enemy.GetComponent<Animator>().runtimeAnimatorController = _enemyAnimatorMap.GetAnimatorController(enemyName);
+        playerHP = _playerScript.GetCurrentHp();
     }
-    
+
 
     public void EnemyAttack()
     {
@@ -49,6 +56,7 @@ public class TurnController : MonoBehaviour
         {
             attacking = true;
             StartCoroutine(delayedEnemyAttack());
+            playerHP = _playerScript.GetCurrentHp();
         }
     }
 
@@ -88,5 +96,10 @@ public class TurnController : MonoBehaviour
     {
         MenuScreenLoadParam.MenuLoadFromGame = true;
         SceneManager.LoadSceneAsync("Leaderboard");
+    }
+
+    public int GetPlayerHP()
+    {
+        return playerHP;
     }
 }

@@ -20,7 +20,11 @@ public class MenuScreenController : MonoBehaviour
 	[SerializeField] private Camera camera;
 	[SerializeField] private PlayerWorldMovement playerWorldMovement;
 	[SerializeField] private Animator playerAnimator;
+	[SerializeField] private GameObject settingsPopup;
+	[SerializeField] private Button musicButton;
 	[SerializeField] private TextMeshProUGUI worldName;
+	[SerializeField] private Sprite unmuteButtonSprite;
+	[SerializeField] private Sprite muteButtonSprite;
 
 	[SerializeField] private Sprite[] worldImageList;
 
@@ -39,18 +43,32 @@ public class MenuScreenController : MonoBehaviour
 		
 		_dataController.LoadGameData();
 		
+		//For debugging purposes, won't be executed in real build
 		if (_dataController.currentUser == null)
 		{
 			_dataController.currentUser=new User();
 			_dataController.currentUser.usr = "siaii";
 			_dataController.currentUser.chr = "pipo-nekonin002";
 		}
+		
 		hiUser.text = "Hi, " + _dataController.currentUser.usr;
 
+		//Change the shown user character
 		int chrIdx = int.Parse(_dataController.currentUser.chr.Substring(12, 3));
-
 		playerAnimator.runtimeAnimatorController = animatorList[chrIdx - 1];
+		
+		updateWorldShown(_dataController.getCurrWorld());
+		if (_dataController.getCurrWorld() > 1)
+		{
+			backButton.SetActive(true);
+		}
 
+		if (_dataController.getCurrWorld() < worldPrefabs.Length)
+		{
+			nextButton.SetActive(true);
+		}
+
+		//If loading from gameplay, show level select instead of world select
 		if (MenuScreenLoadParam.MenuLoadFromGame)
 		{
 			SelectWorld();
@@ -78,12 +96,16 @@ public class MenuScreenController : MonoBehaviour
 
 	public void BackToWorld()
 	{
+		//Resets the current level so that the next world loaded the player is at level 1
+		MenuScreenLoadParam.currentLevel = 1;
 		levelPopup.SetActive(false);
 		levelBaseGameObject.SetActive(false);
 		worldBaseGameObject.SetActive(true);
 		
+		//Destroy the current world prefab so it doesn't clash with the next world loaded
 		Destroy(activeWorld);
 		
+		//Resets the camera position to the bottom
 		Vector3 camPos = camera.transform.position;
 		camPos.y = camera.GetComponent<CameraControl>().getMinY();
 		camera.transform.position = camPos;
@@ -96,6 +118,8 @@ public class MenuScreenController : MonoBehaviour
 
 	public void StartGame()
 	{
+		//Saves current position before entering gameplay
+		MenuScreenLoadParam.currentLevel = _dataController.getCurrLevel();
 		SceneManager.LoadScene("Turn-Based");
 	}
 
@@ -110,13 +134,14 @@ public class MenuScreenController : MonoBehaviour
 	IEnumerator PopupAnim()
 	{
 		float t = 0;
+		//Makes the popup has animation
 		while (t <= 1)
 		{
 			float scale=Mathf.Lerp(0, 1, t);
 			Vector3 currScale=new Vector3(scale,scale,1);
 			levelPopup.transform.localScale = currScale;
-			t += 0.05f;
-			yield return new WaitForSeconds(0.01f);
+			t += 3f*Time.deltaTime;
+			yield return new WaitForSeconds(0.001f);
 		}
 	}
 
@@ -128,9 +153,11 @@ public class MenuScreenController : MonoBehaviour
 	private void updateWorldShown(int world)
 	{
 		worldImage.GetComponentInChildren<TextMeshProUGUI>().text = "World " + world.ToString();
+		//Gets all children of worldImage and iterates all until it finds the one with the name "Image"
 		Component[] list = worldImage.GetComponentsInChildren<Image>();
 		foreach (Image img in list)
 		{
+			//Changes the show image for the shown world
 			if (img.name == "Image")
 			{
 				img.preserveAspect = true;
@@ -142,6 +169,8 @@ public class MenuScreenController : MonoBehaviour
 	{
 		int currWorld = _dataController.getCurrWorld();
 		_dataController.setCurrWorld(++currWorld);
+		
+		//If the shown world is the last one, deactivate, else activate
 		if (currWorld == 2)
 		{
 			backButton.SetActive(true);
@@ -157,6 +186,8 @@ public class MenuScreenController : MonoBehaviour
 	{
 		int currWorld = _dataController.getCurrWorld();
 		_dataController.setCurrWorld(--currWorld);
+		
+		//If the shown world is the first one, deactivate, else activate
 		if (currWorld == 1)
 		{
 			backButton.SetActive(false);
@@ -169,8 +200,39 @@ public class MenuScreenController : MonoBehaviour
 
 	public void LeaderboardButton()
 	{
+		//Saves the position of player before loading leaderboard
 		MenuScreenLoadParam.MenuLoadFromGame = true;
+		MenuScreenLoadParam.currentLevel = _dataController.getCurrLevel();
 		SceneManager.LoadSceneAsync("Leaderboard");
 	}
-	
+
+	public void OnSettingsPopupButton()
+	{
+		settingsPopup.SetActive(true);
+	}
+
+	public void ToggleMuteButton()
+	{
+		MusicObjectScript audioSourceScript = FindObjectOfType<MusicObjectScript>();
+		if (audioSourceScript.GetComponent<AudioSource>().mute)
+		{
+			musicButton.GetComponent<Image>().sprite = unmuteButtonSprite;
+		}
+		else
+		{
+			musicButton.GetComponent<Image>().sprite = muteButtonSprite;
+		}
+		audioSourceScript.ToggleMusic();
+	}
+
+	public void OnCharacterSelectButton()
+	{
+		MenuScreenLoadParam.CharacterLoadFromMenu = true;
+		SceneManager.LoadSceneAsync("CharacterSelectionScreen");
+	}
+
+	public void OnCloseSettingsButton()
+	{
+		settingsPopup.SetActive(false);
+	}
 }

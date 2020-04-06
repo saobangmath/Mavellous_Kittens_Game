@@ -24,8 +24,10 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Only enable camera movement when selecting level
         if (levelBaseGameObject.activeSelf)
         {
+            //MouseControl is mostly for debugging purposes, unless you want to plug a mouse to your phone
             if (Input.touchSupported)
             {
                 TouchControl();
@@ -41,23 +43,27 @@ public class CameraControl : MonoBehaviour
     {
         Vector2 origPos;
         Vector2 lastPos;
+        
+        //Using 1 finger to drag the camera
         if (Input.touchCount == 1)
         {
             Touch fp=Input.GetTouch(0);
             
+            //Saves position of finger when it first touches the screen
             if (fp.phase == TouchPhase.Began)
             {
                 pointerPosLastFrame = Input.GetTouch(0).position;
                 isPanningLastFrame = true;
             }
 
+            //Updates camera position based on movement of finger
             if (fp.phase == TouchPhase.Moved)
             {
                 Vector3 pointerPosThisFrame = Input.GetTouch(0).position;
                 Vector3 pos = transform.position;
                 Vector3 offset = pointerPosLastFrame - pointerPosThisFrame;
 
-                pos.y += offset.y * Time.deltaTime;
+                pos.y += 0.45f *offset.y * Time.deltaTime;
                 pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
                 transform.position = pos;

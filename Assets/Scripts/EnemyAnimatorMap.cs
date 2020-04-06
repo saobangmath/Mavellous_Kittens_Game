@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAnimatorMap : MonoBehaviour
 {
+    //Basically a serializable dictionary for the enemy animations
     [System.Serializable]
     public class EnemyAnimatorEntry
     {

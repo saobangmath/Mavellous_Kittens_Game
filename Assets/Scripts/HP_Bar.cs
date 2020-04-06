@@ -9,16 +9,11 @@ public class HP_Bar : MonoBehaviour
 
     [SerializeField] private GameObject entity;
     private SpriteRenderer _spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        
-    }
-
-    // Update is called once per frame
-    void Update()    
-    {
         
     }
 
@@ -27,16 +22,15 @@ public class HP_Bar : MonoBehaviour
         float t = 0;
         float dur = 1;
         Vector3 currScale = transform.localScale;
-        while (t<=1)
+        while (t<=dur)
         {
             //Make it so the decrease is not instaneous
             currScale.x=Mathf.Lerp(scaledPrevHp, scaledCurrHp, t/dur);
-            t += 0.01f;
-            //Wait for 0.1 second every sprite update
-            yield return new WaitForSeconds(0.01f);
+            t += 0.02f;
+            //Wait for 0.005 second every sprite update
+            yield return new WaitForSeconds(0.001f);
             transform.localScale = currScale;
-       }
-
+        }
         yield return null;
     }
 }

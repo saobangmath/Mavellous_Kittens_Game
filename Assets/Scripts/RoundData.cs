@@ -3,6 +3,7 @@
 [System.Serializable]
 public class RoundData
 {
+	public string lvlId;
 	public string name;
 	public string boss;
 	public int difficulty;

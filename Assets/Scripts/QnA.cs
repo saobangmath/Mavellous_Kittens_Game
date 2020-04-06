@@ -5,21 +5,22 @@ using UnityEngine;
 [System.Serializable]
 public class QnA
 {
-    private String questionText;
+    private String _questionText;
     public String[] ansChoice;
-    private int correctAns;
+    private int _correctAns;
+    public string questionId;
     
     public string QuestionText
     {
-        get => questionText;
-        set => questionText = value;
+        get => _questionText;
+        set => _questionText = value;
     }
     
 
     public int CorrectAns
     {
-        get => correctAns;
-        set => correctAns = value;
+        get => _correctAns;
+        set => _correctAns = value;
     }
     
 }
