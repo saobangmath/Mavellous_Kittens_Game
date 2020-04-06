@@ -21,6 +21,7 @@ public class FirebaseScript : MonoBehaviour
     private DatabaseReference _levelReference;
     private DatabaseReference _questionReference;
     private DatabaseReference _userReference;
+    private DatabaseReference _attemptReference;
 
 
     
@@ -36,7 +37,7 @@ public class FirebaseScript : MonoBehaviour
         _levelReference = _reference.Child("Levels");
         _questionReference = _reference.Child("Questions");
         _userReference = _reference.Child("Users");
-
+        _attemptReference = _reference.Child("Attempts");
     }
 
     private async void Start()
@@ -120,6 +121,7 @@ public class FirebaseScript : MonoBehaviour
                         {
                             RoundData lvlTemp = LoadLevelData(lvl.Value.ToString()).Result;
                             lvlCol[lvlIdx].name = lvlTemp.name;
+                            lvlCol[lvlIdx].boss = lvlTemp.boss;
                             lvlCol[lvlIdx].questions = lvlTemp.questions;
                             ++lvlIdx;
                         }
@@ -128,6 +130,7 @@ public class FirebaseScript : MonoBehaviour
                     for (int i = 0; i < lvlCol.Length; ++i)
                     {
                         worldTemp.LvlData[i].name = lvlCol[i].name;
+                        worldTemp.LvlData[i].boss = lvlCol[i].boss;
                         worldTemp.LvlData[i].questions = lvlCol[i].questions;
                     }
 
@@ -166,7 +169,7 @@ public class FirebaseScript : MonoBehaviour
                     //Special cases for "boss", the enemy image sprite and "lv", level name
                     if (question.Key == "boss")
                     {
-                        continue;    //TODO Feature not implemented yet, load enemy sprite based on here
+                        lvlResult.boss = question.Value.ToString();
                     }else if (question.Key == "lv")
                     {
                         lvlResult.name = question.Value.ToString();
@@ -257,5 +260,12 @@ public class FirebaseScript : MonoBehaviour
         });
         return userResult;
     }
+
+    public async void PostUserAttempt(Attempt currAttempt)
+    {
+        DatabaseReference newAttemptReference = _attemptReference.Push();
+        await newAttemptReference.SetRawJsonValueAsync(JsonUtility.ToJson(currAttempt));
+    }
+    
     
 }

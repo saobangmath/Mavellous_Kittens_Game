@@ -22,6 +22,7 @@ public class PlayerWorldMovement : MonoBehaviour
         _levelScript = levelBaseGameObject.GetComponentInChildren<LevelScript>();
         _playerTransform = this.GetComponent<Transform>();
         waypoints = _levelScript.getWaypoints();
+        transform.position = waypoints[0].position;
         currWaypointIdx = 0;
     }
 
@@ -63,7 +64,6 @@ public class PlayerWorldMovement : MonoBehaviour
         float t;
         while (currWaypointIdx!=(wayIdx-1)*3)
         {
-            Debug.Log("inside while loop");
             origPos = _playerTransform.position;
             t = 0;
             

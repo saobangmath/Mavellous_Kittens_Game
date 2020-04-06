@@ -84,11 +84,19 @@
           <e p="CharacterSelectionHandler.cs" t="Include" />
           <e p="CloudPingPong.cs" t="Include" />
           <e p="DataController.cs" t="Include" />
+          <e p="EnemyAnimatorMap.cs" t="Include" />
           <e p="EnemyScript.cs" t="Include" />
           <e p="FirebaseHandler.cs" t="Include" />
           <e p="FirebaseScript.cs" t="Include" />
           <e p="GameData.cs" t="Include" />
           <e p="HP_Bar.cs" t="Include" />
+          <e p="Leaderboard" t="Include">
+            <e p="Attempt.cs" t="Include" />
+            <e p="AttemptsFirebase.cs" t="Include" />
+            <e p="DisplayHighscores.cs" t="Include" />
+            <e p="Highscores.cs" t="Include" />
+            <e p="LeaderboardUser.cs" t="Include" />
+          </e>
           <e p="LevelScript.cs" t="Include" />
           <e p="LoginHandler.cs" t="Include" />
           <e p="MenuScreenController.cs" t="Include" />

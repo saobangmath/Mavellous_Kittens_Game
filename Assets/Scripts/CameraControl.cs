@@ -11,8 +11,8 @@ public class CameraControl : MonoBehaviour
     private float panSpeed = 10f;
     private Vector3 pointerPosLastFrame;
 
-    private float maxY = 25f;
-    private float minY = -5f;
+    private float maxY = 42f;
+    private float minY = -4f;
 
     private bool isPanningLastFrame=false;
     // Start is called before the first frame update

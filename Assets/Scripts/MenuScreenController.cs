@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
-using UnityEditor.Animations;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,8 +10,6 @@ using UnityEngine.Serialization;
 public class MenuScreenController : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI lvlName;
-	[SerializeField] private TextMeshProUGUI lvlDifficulty;
-	[SerializeField] private TextMeshProUGUI lvlHighScore;
 	[SerializeField] private TextMeshProUGUI hiUser;
 	[SerializeField] private GameObject worldBaseGameObject;
 	[SerializeField] private GameObject levelBaseGameObject;
@@ -23,12 +20,13 @@ public class MenuScreenController : MonoBehaviour
 	[SerializeField] private Camera camera;
 	[SerializeField] private PlayerWorldMovement playerWorldMovement;
 	[SerializeField] private Animator playerAnimator;
+	[SerializeField] private TextMeshProUGUI worldName;
 
 	[SerializeField] private Sprite[] worldImageList;
 
 	[SerializeField] private GameObject[] worldPrefabs;
 
-	[SerializeField] private AnimatorController[] animatorList;
+	[SerializeField] private RuntimeAnimatorController[] animatorList;
 	
 	private GameObject activeWorld;
 	private DataController _dataController;
@@ -52,7 +50,7 @@ public class MenuScreenController : MonoBehaviour
 		int chrIdx = int.Parse(_dataController.currentUser.chr.Substring(12, 3));
 
 		playerAnimator.runtimeAnimatorController = animatorList[chrIdx - 1];
-		
+
 		if (MenuScreenLoadParam.MenuLoadFromGame)
 		{
 			SelectWorld();
@@ -72,6 +70,7 @@ public class MenuScreenController : MonoBehaviour
 		activeWorld = Instantiate(worldPrefabs[_dataController.getCurrWorld() - 1], levelBaseGameObject.transform, false);
 		playerWorldMovement.setWaypoints();
 		playerWorldMovement.resetPlayer();
+		worldName.text = "World "+_dataController.getCurrWorld().ToString();
 		worldBaseGameObject.SetActive(false);
 		levelBaseGameObject.SetActive(true);
 
@@ -93,7 +92,6 @@ public class MenuScreenController : MonoBehaviour
 	public void changeLvl()
 	{
 		lvlName.text = _dataController.GetLevelName(_dataController.getCurrLevel());
-		lvlHighScore.text = "High Score: " + _dataController.GetHighestPlayerScore().ToString();
 	}
 
 	public void StartGame()
@@ -135,6 +133,7 @@ public class MenuScreenController : MonoBehaviour
 		{
 			if (img.name == "Image")
 			{
+				img.preserveAspect = true;
 				img.sprite = worldImageList[world - 1];
 			}
 		}
@@ -146,8 +145,10 @@ public class MenuScreenController : MonoBehaviour
 		if (currWorld == 2)
 		{
 			backButton.SetActive(true);
+		}else if (currWorld == worldPrefabs.Length)
+		{
+			nextButton.SetActive(false);
 		}
-		//TODO else if currWorld==max, nextButton set active false
 		updateWorldShown(currWorld);
 		
 	}
@@ -159,8 +160,17 @@ public class MenuScreenController : MonoBehaviour
 		if (currWorld == 1)
 		{
 			backButton.SetActive(false);
+		}else if (currWorld == worldPrefabs.Length - 1)
+		{
+			nextButton.SetActive(true);
 		}
 		updateWorldShown(currWorld);
+	}
+
+	public void LeaderboardButton()
+	{
+		MenuScreenLoadParam.MenuLoadFromGame = true;
+		SceneManager.LoadSceneAsync("Leaderboard");
 	}
 	
 }

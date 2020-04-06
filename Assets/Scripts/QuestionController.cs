@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Firebase;
+using Firebase.Auth;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +14,7 @@ public class QuestionController : MonoBehaviour
 {
     private TurnController _turnController;
     private DataController _dataController;
+    private FirebaseScript _firebaseScript;
     private List<QnA> qData=new List<QnA>();
     [SerializeField] private TextMeshProUGUI questionTMP;
     [SerializeField] private Button[] choiceButtons;
@@ -28,17 +31,20 @@ public class QuestionController : MonoBehaviour
     private RoundData currentRoundData;
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _dataController = FindObjectOfType<DataController>();
+        _firebaseScript = FindObjectOfType<FirebaseScript>();
         _turnController = GetComponent<TurnController>();
+
 
         if (_dataController != null)
         {
             currentRoundData= _dataController.GetCurrentRoundData(_dataController.getCurrLevel());
+            Debug.Log("qController Boss: "+currentRoundData.boss);
             for (int i = 0; i < currentRoundData.questions.Count; ++i)
             {
-                addQuestionData(i);
+                AddQuestionData(i);
             }            
         }
         else
@@ -54,7 +60,7 @@ public class QuestionController : MonoBehaviour
         isRoundActive = true;
     }
 
-    void Update()
+    private void Update()
     {
         if (isRoundActive)
         {
@@ -68,7 +74,7 @@ public class QuestionController : MonoBehaviour
         }
     }
 
-    void UpdateQuestion(int index)
+    private void UpdateQuestion(int index)
     {
         for (int i = 0; i < choiceButtons.Length; ++i)
         {
@@ -103,7 +109,7 @@ public class QuestionController : MonoBehaviour
         }
         else
         {
-            ++score;
+            score += (int) timeRemaining;
             choiceButtons[choice - 1].GetComponent<Image>().sprite = correctButtonImage;
             _turnController.PlayerAttack();
         }
@@ -125,20 +131,14 @@ public class QuestionController : MonoBehaviour
         }
         else
         {
-            levelFinished();
+            LevelFinished();
         }
     }
 
-    private void addQuestionData(int idx)
+    private void AddQuestionData(int idx)
     {
         QnA currRoundData = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions[idx];
         qData.Add(currRoundData);
-    }
-
-    private void FinishLevel()
-    {
-        Debug.Log("level won");
-        SceneManager.LoadScene("MenuScreen");
     }
 
     public void StartNewRound()
@@ -152,10 +152,19 @@ public class QuestionController : MonoBehaviour
         }
     }
 
-    private void levelFinished()
+    private void LevelFinished()
     {
+        PostScore();
         levelFinishPrompt.SetActive(true);
         levelFinishPrompt.GetComponentInChildren<TextMeshProUGUI>().text = "Score: "+score.ToString();
+    }
 
+    private void PostScore()
+    {
+        if (_dataController.currentUser.usr != "siaii" && _dataController.currentUser.llv != "pipo-nekonin002")
+        {
+            Attempt currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getCurrLevel(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+            _firebaseScript.PostUserAttempt(currAttempt);            
+        }
     }
 }

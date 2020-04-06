@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +13,7 @@ public class TurnController : MonoBehaviour
 
     [SerializeField] private GameObject enemy;
 
-    [SerializeField] private AnimatorController[] animatorList;
+    [SerializeField] private RuntimeAnimatorController[] animatorList;
 
     private EnemyScript _enemyScript;
     private PlayerScript _playerScript;
@@ -23,27 +23,25 @@ public class TurnController : MonoBehaviour
     private bool attacking = false;
 
     private QuestionController _questionController;
+
+    private EnemyAnimatorMap _enemyAnimatorMap;
     // Start is called before the first frame update
     void Start()
     {
         _enemyScript = enemy.GetComponent<EnemyScript>();
         _playerScript = player.GetComponent<PlayerScript>();
         _questionController = GetComponent<QuestionController>();
-
+        _enemyAnimatorMap = GetComponent<EnemyAnimatorMap>();
         _dataController = FindObjectOfType<DataController>();
         
         int chrIdx = int.Parse(_dataController.currentUser.chr.Substring(12, 3));
-        //TODO Create all character's animation
+        string enemyName = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).boss;
         
         player.GetComponent<Animator>().runtimeAnimatorController = animatorList[chrIdx-1];
+        Debug.Log("Enemy: "+enemyName);
+        enemy.GetComponent<Animator>().runtimeAnimatorController = _enemyAnimatorMap.GetAnimatorController(enemyName);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-    }
+    
 
     public void EnemyAttack()
     {
@@ -84,5 +82,11 @@ public class TurnController : MonoBehaviour
     {
         MenuScreenLoadParam.MenuLoadFromGame = true;
         SceneManager.LoadSceneAsync("MenuScreen");
+    }
+
+    public void LeaderboardButton()
+    {
+        MenuScreenLoadParam.MenuLoadFromGame = true;
+        SceneManager.LoadSceneAsync("Leaderboard");
     }
 }

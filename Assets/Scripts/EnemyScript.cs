@@ -13,7 +13,6 @@ public class EnemyScript : MonoBehaviour
 
     [SerializeField] private GameObject player;
     [SerializeField] private HP_Bar bar;
-    [SerializeField] private RuntimeAnimatorController[] enemyAnim;
     [SerializeField] private static int maxHP = 10;
     private int _hp;
     private PlayerScript _playerScript;
@@ -27,7 +26,7 @@ public class EnemyScript : MonoBehaviour
     {
         _anim = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _anim.runtimeAnimatorController = enemyAnim[1];
+        //_anim.runtimeAnimatorController = 
         _playerScript = player.GetComponent<PlayerScript>();
         _dataController = FindObjectOfType<DataController>();
         if (_dataController != null) //Sanity check
@@ -43,12 +42,12 @@ public class EnemyScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            _anim.SetTrigger("attacked");
+            _anim.SetTrigger("attack");
         }
 
         if (Input.GetKey(KeyCode.Return))
         {
-            _anim.SetBool("run", !_anim.GetBool("run"));
+            _anim.SetTrigger("attack");
         }
     }
 

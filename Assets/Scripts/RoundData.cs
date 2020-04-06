@@ -4,6 +4,7 @@
 public class RoundData
 {
 	public string name;
+	public string boss;
 	public int difficulty;
 	public int timeLimitInSeconds;
 	public int pointsAddedForCorrectAnswer;
