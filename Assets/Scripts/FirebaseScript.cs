@@ -292,7 +292,7 @@ public class FirebaseScript : MonoBehaviour
                 {
                     //Fallback user incase the user is found (should not be the case)
                     userResult.usr = "siaii";
-                    userResult.llv = "1";
+                    userResult.llv = "0";
                     userResult.chr = "pipo-nekonin004";
                 }
             }
@@ -312,6 +312,11 @@ public class FirebaseScript : MonoBehaviour
     public async void UpdateUserChar(string name)
     {
         await _userReference.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("chr").SetValueAsync(name);
+    }
+
+    public async void UpdateUserLLv(string llv)
+    {
+        await _userReference.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("llv").SetValueAsync(llv);
     }
     
 }

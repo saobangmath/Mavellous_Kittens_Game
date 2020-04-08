@@ -544,7 +544,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1400603597317518322}
   m_OnClick:
     m_PersistentCalls:
@@ -734,7 +734,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1400603597657992545}
   m_OnClick:
     m_PersistentCalls:
@@ -1153,7 +1153,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1400603597912648556}
   m_OnClick:
     m_PersistentCalls:
@@ -1528,7 +1528,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1400603598430515036}
   m_OnClick:
     m_PersistentCalls:
@@ -2104,7 +2104,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1400603599119038297}
   m_OnClick:
     m_PersistentCalls:
@@ -3223,7 +3223,7 @@ GameObject:
   - component: {fileID: 1469680251473757058}
   - component: {fileID: 6768731158494245764}
   m_Layer: 0
-  m_Name: World2Base
+  m_Name: World3Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3275,6 +3275,13 @@ MonoBehaviour:
   - {fileID: 5595543474331753650}
   - {fileID: 3407829988233041701}
   - {fileID: 3692806808928337240}
+  buttonsArr:
+  - {fileID: 1400603599119038296}
+  - {fileID: 1400603598430515027}
+  - {fileID: 1400603597317518321}
+  - {fileID: 1400603597912648547}
+  - {fileID: 1400603597657992544}
+  - {fileID: 4878432328439911308}
 --- !u!1 &1512920799287852556
 GameObject:
   m_ObjectHideFlags: 0
@@ -3479,7 +3486,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 7462302669507072148}
   m_OnClick:
     m_PersistentCalls:

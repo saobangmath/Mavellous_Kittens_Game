@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -25,7 +26,9 @@ public class MenuScreenController : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI worldName;
 	[SerializeField] private Sprite unmuteButtonSprite;
 	[SerializeField] private Sprite muteButtonSprite;
-
+	[SerializeField] private GameObject exitPopup;
+	[SerializeField] private GameObject creditsPopup;
+	
 	[SerializeField] private Sprite[] worldImageList;
 
 	[SerializeField] private GameObject[] worldPrefabs;
@@ -49,6 +52,7 @@ public class MenuScreenController : MonoBehaviour
 			_dataController.currentUser=new User();
 			_dataController.currentUser.usr = "siaii";
 			_dataController.currentUser.chr = "pipo-nekonin002";
+			_dataController.currentUser.llv = 0.ToString();
 		}
 		
 		hiUser.text = "Hi, " + _dataController.currentUser.usr;
@@ -76,10 +80,28 @@ public class MenuScreenController : MonoBehaviour
 			levelBaseGameObject.SetActive(true);
 			MenuScreenLoadParam.MenuLoadFromGame = false;
 		}
-		
-		
 	}
-	
+
+	private void Update()
+	{
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			//Back button in android is mapped to escape button
+			if (Input.GetKey(KeyCode.Escape))
+			{
+				//If in level select, go back to world select. If in world select, show exit confirmation
+				if (levelBaseGameObject.activeSelf)
+				{
+					BackToWorld();
+				}
+				else
+				{
+					OnExitButton();
+				}
+			}
+		}
+	}
+
 	public void SelectWorld()
 	{		
 		Vector3 camPos = camera.transform.position;
@@ -234,5 +256,30 @@ public class MenuScreenController : MonoBehaviour
 	public void OnCloseSettingsButton()
 	{
 		settingsPopup.SetActive(false);
+	}
+
+	public void OnExitButton()
+	{
+		exitPopup.SetActive(true);
+	}
+
+	public void OnExitCancel()
+	{
+		exitPopup.SetActive(false);
+	}
+
+	public void OnExitConfirm()
+	{
+		Application.Quit();
+	}
+
+	public void OnCreditsButton()
+	{
+		creditsPopup.SetActive(true);
+	}
+
+	public void OnCreditsClose()
+	{
+		creditsPopup.SetActive(false);
 	}
 }

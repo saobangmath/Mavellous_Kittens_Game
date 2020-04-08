@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class CameraControl : MonoBehaviour
 {
     [SerializeField] private GameObject levelBaseGameObject;
+    [SerializeField] private GameObject levelPopup;
     private Camera _camera;
     private float panSpeed = 10f;
     private Vector3 pointerPosLastFrame;
@@ -25,7 +26,7 @@ public class CameraControl : MonoBehaviour
     void Update()
     {
         //Only enable camera movement when selecting level
-        if (levelBaseGameObject.activeSelf)
+        if (levelBaseGameObject.activeSelf && !levelPopup.activeSelf)
         {
             //MouseControl is mostly for debugging purposes, unless you want to plug a mouse to your phone
             if (Input.touchSupported)

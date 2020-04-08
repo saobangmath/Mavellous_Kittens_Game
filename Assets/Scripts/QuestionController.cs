@@ -159,9 +159,14 @@ public class QuestionController : MonoBehaviour
     {
         PostScore();
         levelFinishPrompt.SetActive(true);
+        //If player loses, don't increase llv
         if (_turnController.GetPlayerHP() == 1)
         {
             levelFinishTxt.text = "You Lose!";
+        }
+        else
+        {
+            _dataController.IncUserLLv();
         }
         levelFinishPrompt.GetComponentInChildren<TextMeshProUGUI>().text = "Score: "+score.ToString();
     }
@@ -169,7 +174,7 @@ public class QuestionController : MonoBehaviour
     private void PostScore()
     {
         //If current user is the debug user
-        if (_dataController.currentUser.usr != "siaii" && _dataController.currentUser.llv != "pipo-nekonin002")
+        if (_dataController.currentUser.usr != "siaii")
         {
             Attempt currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getCurrLevel(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);
             _firebaseScript.PostUserAttempt(currAttempt);            

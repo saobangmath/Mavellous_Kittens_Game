@@ -91,5 +91,24 @@ public class DataController : MonoBehaviour
     {
         allRoundData = allWorldData[wldIdx-1];
     }
+
+    public string GetUserLLv()
+    {
+        return currentUser.llv;
+    }
+
+    public void IncUserLLv()
+    {
+        //If currentUser llv is smaller than the level completed, increase llv
+        if (int.Parse(currentUser.llv) < currWorld * 6 + currLevel)
+        {
+            currentUser.llv = ((currWorld-1) * 6 + currLevel).ToString();
+            //If not debug user
+            if (currentUser.usr != "siaii" )
+            {
+                _firebaseScript.UpdateUserLLv(currentUser.llv);
+            }
+        }
+    }
     
 }

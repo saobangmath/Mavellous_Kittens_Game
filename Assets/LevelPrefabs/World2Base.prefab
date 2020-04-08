@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 680678684788335283}
   - component: {fileID: 4681569804901405365}
   m_Layer: 0
-  m_Name: World3Base
+  m_Name: World2Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,6 +109,13 @@ MonoBehaviour:
   - {fileID: 5835560786635952225}
   - {fileID: 7549342857962167136}
   - {fileID: 5079468968388066558}
+  buttonsArr:
+  - {fileID: 1042840890892260969}
+  - {fileID: 1042840891345636962}
+  - {fileID: 1042840890294637248}
+  - {fileID: 1042840889682725458}
+  - {fileID: 1042840889433836625}
+  - {fileID: 4758243436207765331}
 --- !u!1 &1042840889370270189
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,7 +519,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1042840889433836624}
   m_OnClick:
     m_PersistentCalls:
@@ -672,7 +679,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1042840889682725469}
   m_OnClick:
     m_PersistentCalls:
@@ -1077,7 +1084,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1042840890294637251}
   m_OnClick:
     m_PersistentCalls:
@@ -2342,7 +2349,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1042840890892260968}
   m_OnClick:
     m_PersistentCalls:
@@ -3027,7 +3034,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1042840891345636973}
   m_OnClick:
     m_PersistentCalls:
@@ -3086,7 +3093,7 @@ GameObject:
   - component: {fileID: 4646846526709950806}
   - component: {fileID: 4758243436207765331}
   m_Layer: 5
-  m_Name: LevelFiveButton (1)
+  m_Name: LevelSixButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3187,7 +3194,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 4646846526709950806}
   m_OnClick:
     m_PersistentCalls:

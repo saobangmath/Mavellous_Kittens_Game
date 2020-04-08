@@ -123,6 +123,13 @@ MonoBehaviour:
   - {fileID: 8913424662616779710}
   - {fileID: 1828055679466463273}
   - {fileID: 372384384095291988}
+  buttonsArr:
+  - {fileID: 2700598644379844692}
+  - {fileID: 2700598644664670303}
+  - {fileID: 2700598645778580733}
+  - {fileID: 2700598645316754543}
+  - {fileID: 2700598645035620972}
+  - {fileID: 8477509523476014208}
 --- !u!1 &2481729425222611756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,7 +1409,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2700598644379844693}
   m_OnClick:
     m_PersistentCalls:
@@ -1622,7 +1629,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2700598644664670288}
   m_OnClick:
     m_PersistentCalls:
@@ -2566,7 +2573,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2700598645035620973}
   m_OnClick:
     m_PersistentCalls:
@@ -2696,7 +2703,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2700598645316754528}
   m_OnClick:
     m_PersistentCalls:
@@ -3101,7 +3108,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2700598645778580734}
   m_OnClick:
     m_PersistentCalls:
@@ -111282,7 +111289,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 5880268554080429976}
   m_OnClick:
     m_PersistentCalls:
