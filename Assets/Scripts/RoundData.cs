@@ -9,5 +9,5 @@ public class RoundData
 	public int difficulty;
 	public int timeLimitInSeconds;
 	public int pointsAddedForCorrectAnswer;
-	public List<QnA> questions;
+	public List<QnA> questions= new List<QnA>();
 }
