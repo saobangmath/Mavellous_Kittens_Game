@@ -41,11 +41,18 @@ public class QuestionController : MonoBehaviour
 
         if (_dataController != null)
         {
-            currentRoundData= _dataController.GetCurrentRoundData(_dataController.getCurrLevel());
+            if (_dataController.getCustom())
+            {
+                currentRoundData = _dataController.GetCurrentRoundData(_dataController.getLvlID());
+            }
+            else
+            {
+                currentRoundData= _dataController.GetCurrentRoundData(_dataController.getCurrLevel());
+            }
             Debug.Log("qController Boss: "+currentRoundData.boss);
             for (int i = 0; i < currentRoundData.questions.Count; ++i)
             {
-                AddQuestionData(i);
+                qData.Add(currentRoundData.questions[i]);
             }            
         }
         else
@@ -136,12 +143,6 @@ public class QuestionController : MonoBehaviour
         {
             LevelFinished();
         }
-    }
-
-    private void AddQuestionData(int idx)
-    {
-        QnA currRoundData = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions[idx];
-        qData.Add(currRoundData);
     }
 
     public void StartNewRound()

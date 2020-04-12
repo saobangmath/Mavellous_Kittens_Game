@@ -39,8 +39,15 @@ public class TurnController : MonoBehaviour
         
         //Gets player character and enemy character info
         int chrIdx = int.Parse(_dataController.currentUser.chr.Substring(12, 3));
-        string enemyName = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).boss;
-        
+        string enemyName;
+        if (_dataController.getCustom())
+        {
+            enemyName = _dataController.GetCurrentRoundData(_dataController.getLvlID()).boss;
+        }
+        else
+        {
+            enemyName = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).boss;
+        }
         //Displays player character according to the player's choice
         player.GetComponent<Animator>().runtimeAnimatorController = animatorList[chrIdx-1];
         
@@ -88,13 +95,30 @@ public class TurnController : MonoBehaviour
 
     public void finishLvl()
     {
-        MenuScreenLoadParam.MenuLoadFromGame = true;
-        SceneManager.LoadSceneAsync("MenuScreen");
+        //If this is a custom game, load back to custom levels scene, else go back to level select scene
+        if (_dataController.getCustom())
+        {
+            MenuScreenLoadParam.MenuLoadFromGame = false;
+            SceneManager.LoadSceneAsync("CustomLevels");
+        }
+        else
+        {
+            MenuScreenLoadParam.MenuLoadFromGame = true;    
+            SceneManager.LoadSceneAsync("MenuScreen");
+        }
+        
     }
 
     public void LeaderboardButton()
     {
-        MenuScreenLoadParam.MenuLoadFromGame = true;
+        if (_dataController.getCustom())
+        {
+            MenuScreenLoadParam.MenuLoadFromGame = false;
+        }
+        else
+        {
+            MenuScreenLoadParam.MenuLoadFromGame = true;    
+        }
         SceneManager.LoadSceneAsync("Leaderboard");
     }
 
