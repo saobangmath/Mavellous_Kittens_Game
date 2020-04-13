@@ -20,7 +20,7 @@ public class AttemptsFirebase : MonoBehaviour
 
     private DataController _dataController;
 
-    public int levelId = 1;
+    public string levelId;
     public int worldId = 5;
 
     public Transform entryContainer;
@@ -41,7 +41,14 @@ public class AttemptsFirebase : MonoBehaviour
 
     private async void Start()
     {
-        levelId = _dataController.getCurrLevel();
+        if (_dataController.getCustom())
+        {
+            levelId = _dataController.getLvlID();
+        }
+        else
+        {
+            levelId = _dataController.getCurrLevel().ToString();            
+        }
         worldId = _dataController.getCurrWorld();
         
         await GetAttemptDataFirebase(); //initialised attemptList
@@ -94,10 +101,7 @@ public class AttemptsFirebase : MonoBehaviour
                         if (attempt1.worldId == worldId.ToString()) {
                             attemptList.Add(attempt1);
                         }
-                        
                     }
-
-
                 }
             });
     }

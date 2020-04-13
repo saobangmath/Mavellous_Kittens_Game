@@ -22,4 +22,12 @@ public class Attempt
         this.score = score.ToString();
         this.userId = id;
     }
+    
+    public Attempt(int world, string lvl, int score, string id)
+    {
+        this.levelId = lvl;
+        this.worldId = world.ToString();
+        this.score = score.ToString();
+        this.userId = id;
+    }
 }

@@ -15,6 +15,7 @@ public class CustomLevelController : MonoBehaviour
     private System.Collections.Generic.List<QnA> _questionCopy;
     private System.Collections.Generic.List<RoundData> _levelCopy;
     private EnemyAnimatorMap _enemyAnimatorMap;
+    private ToggleContainer _toggleContainer;
 
     private int enemyChrIdx=0;
 
@@ -37,6 +38,7 @@ public class CustomLevelController : MonoBehaviour
         _questionCopy = _firebaseScript.GetQuestionData();
         _levelCopy = _firebaseScript.GetLevelData();
         _enemyAnimatorMap = GetComponent<EnemyAnimatorMap>();
+        _toggleContainer = GetComponent<ToggleContainer>();
 
         //Create toggle objects which acts as the container to be chosen for the question
         for (int i = 0; i < _questionCopy.Count; ++i)
@@ -44,7 +46,7 @@ public class CustomLevelController : MonoBehaviour
             GameObject tempToggle = Instantiate(templateToggle, templateToggle.transform.parent, false);
             tempToggle.SetActive(true);
             tempToggle.GetComponentInChildren<TextMeshProUGUI>().text=_questionCopy[i].QuestionText;
-            ToggleContainer.AddToggle(tempToggle);
+            _toggleContainer.AddToggle(tempToggle);
         }
 
         //Set default enemy sprite as "chicken"
@@ -122,7 +124,7 @@ public class CustomLevelController : MonoBehaviour
         confButton.SetActive(true);
         cancelButton.SetActive(true);
         
-        ToggleContainer.DeactivateOffToggle();
+        _toggleContainer.DeactivateOffToggle();
     }
 
     public void OnConfirmButton()
@@ -132,14 +134,14 @@ public class CustomLevelController : MonoBehaviour
         newLevel.boss = enemySpriteNames[enemyChrIdx];
         newLevel.lvlId = GenerateLevelID();
         newLevel.name = newLevel.lvlId;
-        foreach (var i in ToggleContainer.GetOnToggleIdx())
+        foreach (var i in _toggleContainer.GetOnToggleIdx())
         {
             newLevel.questions.Add(_questionCopy[i]);
         }
         
         lvlIdTxtBack.SetActive(true);
         lvlIdTxtBack.GetComponentInChildren<TextMeshProUGUI>().text = "Level ID: " + newLevel.lvlId;
-        
+            
         _firebaseScript.AddLevel(newLevel);
     }
 
@@ -151,7 +153,7 @@ public class CustomLevelController : MonoBehaviour
         confButton.SetActive(false);
         cancelButton.SetActive(false);
         
-        ToggleContainer.ActivateAllToggle();
+        _toggleContainer.ActivateAllToggle();
     }
     private void UpdateEnemyChr(int idx)
     {
