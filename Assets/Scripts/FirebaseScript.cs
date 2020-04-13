@@ -222,7 +222,6 @@ public class FirebaseScript : MonoBehaviour
                     }
                     _levelList.Add(lvlResult);
                 }
-                
             }
         });
     }

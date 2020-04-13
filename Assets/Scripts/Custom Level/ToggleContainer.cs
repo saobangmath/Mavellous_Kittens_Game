@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public static class ToggleContainer
+public class ToggleContainer : MonoBehaviour
 {
-    private static List<GameObject> _toggles = new List<GameObject>();
+    private List<GameObject> _toggles = new List<GameObject>();
 
-    public static void AddToggle(GameObject newToggle)
+    public void AddToggle(GameObject newToggle)
     {
         _toggles.Add(newToggle);
     }
 
     //Gets toggle index that are on (chosen)
-    public static List<int> GetOnToggleIdx()
+    public List<int> GetOnToggleIdx()
     {
         List<int> resList=new List<int>();
         for (int i = 0; i < _toggles.Count; ++i)
@@ -27,7 +27,7 @@ public static class ToggleContainer
         return resList;
     }
 
-    public static void DeactivateOffToggle()
+    public void DeactivateOffToggle()
     {
         foreach (var t in _toggles)
         {
@@ -38,7 +38,7 @@ public static class ToggleContainer
         }
     }
 
-    public static void ActivateAllToggle()
+    public void ActivateAllToggle()
     {
         foreach (var t in _toggles)
         {

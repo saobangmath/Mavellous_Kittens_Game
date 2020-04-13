@@ -177,7 +177,16 @@ public class QuestionController : MonoBehaviour
         //If current user is the debug user
         if (_dataController.currentUser.usr != "siaii")
         {
-            Attempt currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getCurrLevel(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+            Attempt currAttempt;
+            if (_dataController.getCustom())
+            {
+                currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getLvlID(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+            }
+            else
+            {
+                currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getCurrLevel(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+
+            }
             _firebaseScript.PostUserAttempt(currAttempt);            
         }
     }
