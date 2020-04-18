@@ -190,4 +190,9 @@ public class QuestionController : MonoBehaviour
             _firebaseScript.PostUserAttempt(currAttempt);            
         }
     }
+
+    public RoundData getRoundData()
+    {
+        return currentRoundData;
+    }
 }

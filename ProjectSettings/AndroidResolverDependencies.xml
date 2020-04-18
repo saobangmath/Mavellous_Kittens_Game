@@ -56,12 +56,12 @@
     <file>Assets/Plugins/Android/androidx.versionedparcelable.versionedparcelable-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.viewpager.viewpager-1.0.0.aar</file>
     <file>Assets/Plugins/Android/com.android.installreferrer.installreferrer-1.0.aar</file>
-    <file>Assets/Plugins/Android/com.facebook.android.facebook-applinks-6.2.0.aar</file>
-    <file>Assets/Plugins/Android/com.facebook.android.facebook-common-6.2.0.aar</file>
-    <file>Assets/Plugins/Android/com.facebook.android.facebook-core-6.2.0.aar</file>
-    <file>Assets/Plugins/Android/com.facebook.android.facebook-gamingservices-6.2.0.aar</file>
-    <file>Assets/Plugins/Android/com.facebook.android.facebook-login-6.2.0.aar</file>
-    <file>Assets/Plugins/Android/com.facebook.android.facebook-share-6.2.0.aar</file>
+    <file>Assets/Plugins/Android/com.facebook.android.facebook-applinks-6.4.0.aar</file>
+    <file>Assets/Plugins/Android/com.facebook.android.facebook-common-6.4.0.aar</file>
+    <file>Assets/Plugins/Android/com.facebook.android.facebook-core-6.4.0.aar</file>
+    <file>Assets/Plugins/Android/com.facebook.android.facebook-gamingservices-6.4.0.aar</file>
+    <file>Assets/Plugins/Android/com.facebook.android.facebook-login-6.4.0.aar</file>
+    <file>Assets/Plugins/Android/com.facebook.android.facebook-share-6.4.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-identifier-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-auth-16.0.1.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-auth-api-phone-16.0.0.aar</file>
@@ -98,7 +98,7 @@
   </files>
   <settings>
     <setting name="androidAbis" value="armeabi-v7a" />
-    <setting name="bundleId" value="com.UnityForce.MarvellousKittens" />
+    <setting name="bundleId" value="com.UnityTestRunner.UnityTestRunner" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
     <setting name="gradleTemplateEnabled" value="False" />
