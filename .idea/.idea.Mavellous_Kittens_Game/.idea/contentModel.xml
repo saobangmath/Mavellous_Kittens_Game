@@ -83,6 +83,12 @@
           <e p="CameraControl.cs" t="Include" />
           <e p="CharacterSelectionHandler.cs" t="Include" />
           <e p="CloudPingPong.cs" t="Include" />
+          <e p="Custom Level" t="Include">
+            <e p="ChangeToggleColor.cs" t="Include" />
+            <e p="CustomLevelController.cs" t="Include" />
+            <e p="CustomLevelLoadController.cs" t="Include" />
+            <e p="ToggleContainer.cs" t="Include" />
+          </e>
           <e p="DataController.cs" t="Include" />
           <e p="EnemyAnimatorMap.cs" t="Include" />
           <e p="EnemyScript.cs" t="Include" />
@@ -102,7 +108,6 @@
           <e p="MenuScreenController.cs" t="Include" />
           <e p="MenuScreenLoadParam.cs" t="Include" />
           <e p="MusicObjectScript.cs" t="Include" />
-          <e p="PlayerProgress.cs" t="Include" />
           <e p="PlayerScript.cs" t="Include" />
           <e p="PlayerWorldMovement.cs" t="Include" />
           <e p="QnA.cs" t="Include" />

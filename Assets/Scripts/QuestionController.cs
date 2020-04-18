@@ -38,25 +38,25 @@ public class QuestionController : MonoBehaviour
         _firebaseScript = FindObjectOfType<FirebaseScript>();
         _turnController = GetComponent<TurnController>();
 
-
+        
         if (_dataController != null)
         {
-            currentRoundData= _dataController.GetCurrentRoundData(_dataController.getCurrLevel());
+            //Different format of level id between custom level and default level
+            if (_dataController.getCustom())
+            {
+                currentRoundData = _dataController.GetCurrentRoundData(_dataController.getLvlID());
+            }
+            else
+            {
+                currentRoundData= _dataController.GetCurrentRoundData(_dataController.getCurrLevel());
+            }
             Debug.Log("qController Boss: "+currentRoundData.boss);
             for (int i = 0; i < currentRoundData.questions.Count; ++i)
             {
-                AddQuestionData(i);
+                qData.Add(currentRoundData.questions[i]);
             }            
         }
-        else
-        {
-            QnA testQ=new QnA();
-            testQ.QuestionText = "1+1=?";        //Test question to remove later
-            testQ.ansChoice = new string[] {"a. 1", "b. 2", "c. 3", "d. 4"};
-            testQ.CorrectAns = 2;
-            qData.Add(testQ);
-        }
-        timeRemaining = 20f;
+        timeRemaining = 30f;
         UpdateQuestion(currQidx);
         isRoundActive = true;
     }
@@ -92,12 +92,16 @@ public class QuestionController : MonoBehaviour
     public void CheckAns(int choice)
     {
         isRoundActive = false;
+        //Locks the user's choice by making all buttons not clickable
         for (int i = 0; i < currentRoundData.questions[currQidx].ansChoice.Length; ++i)
         {
             choiceButtons[i].interactable = false;
         }
+        
         if (choice != qData[currQidx].CorrectAns)        //Checks if the chosen answer is correct
         {
+            //When player chooses the wrong answer, shows the correct answer and marks player's answer as wrong and
+            //enemy atacks
             choiceButtons[choice - 1].GetComponent<Image>().sprite = wrongButtonImage;
             for (int i = 0; i < choiceButtons.Length; ++i)
             {
@@ -110,6 +114,7 @@ public class QuestionController : MonoBehaviour
         }
         else
         {
+            //When player chooses the correct answer, increase user's score and player attacks
             score += (int) timeRemaining;
             choiceButtons[choice - 1].GetComponent<Image>().sprite = correctButtonImage;
             _turnController.PlayerAttack();
@@ -126,8 +131,7 @@ public class QuestionController : MonoBehaviour
         isRoundActive = false;
         timeRemaining = 30f;
         currQidx++;
-        //If there are still questions in the level and the player is still alive
-        Debug.Log(_turnController.GetPlayerHP());
+        //If there are still questions in the level and the player is still alive, go to next question
         if (currQidx < currentRoundData.questions.Count && _turnController.GetPlayerHP()>1)
         {
             nextButton.SetActive(true);
@@ -138,17 +142,13 @@ public class QuestionController : MonoBehaviour
         }
     }
 
-    private void AddQuestionData(int idx)
-    {
-        QnA currRoundData = _dataController.GetCurrentRoundData(_dataController.getCurrLevel()).questions[idx];
-        qData.Add(currRoundData);
-    }
-
     public void StartNewRound()
     {
         nextButton.SetActive(false);
         isRoundActive = true;
         UpdateQuestion(currQidx);
+        
+        //Make all the button clickable again
         for (int i = 0; i < currentRoundData.questions[currQidx].ansChoice.Length; ++i)
         {
             choiceButtons[i].interactable = true;
@@ -159,9 +159,14 @@ public class QuestionController : MonoBehaviour
     {
         PostScore();
         levelFinishPrompt.SetActive(true);
+        //If player loses, don't increase llv
         if (_turnController.GetPlayerHP() == 1)
         {
             levelFinishTxt.text = "You Lose!";
+        }
+        else
+        {
+            _dataController.IncUserLLv();
         }
         levelFinishPrompt.GetComponentInChildren<TextMeshProUGUI>().text = "Score: "+score.ToString();
     }
@@ -169,9 +174,19 @@ public class QuestionController : MonoBehaviour
     private void PostScore()
     {
         //If current user is the debug user
-        if (_dataController.currentUser.usr != "siaii" && _dataController.currentUser.llv != "pipo-nekonin002")
+        if (_dataController.currentUser.usr != "siaii")
         {
-            Attempt currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getCurrLevel(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+            Attempt currAttempt;
+            //Different lvl ID format of custom level and default level
+            if (_dataController.getCustom())
+            {
+                currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getLvlID(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+            }
+            else
+            {
+                currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getCurrLevel(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+
+            }
             _firebaseScript.PostUserAttempt(currAttempt);            
         }
     }

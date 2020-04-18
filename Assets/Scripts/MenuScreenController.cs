@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -25,7 +26,9 @@ public class MenuScreenController : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI worldName;
 	[SerializeField] private Sprite unmuteButtonSprite;
 	[SerializeField] private Sprite muteButtonSprite;
-
+	[SerializeField] private GameObject exitPopup;
+	[SerializeField] private GameObject creditsPopup;
+	
 	[SerializeField] private Sprite[] worldImageList;
 
 	[SerializeField] private GameObject[] worldPrefabs;
@@ -35,6 +38,8 @@ public class MenuScreenController : MonoBehaviour
 	private GameObject activeWorld;
 	private DataController _dataController;
 	private RoundData currentRoundData;
+	
+	private string[] worldTopic=new string[]{"Planning", "Analysis, Design & Implementation", "Testing & Integration", "Maintenance", "General", "Levels"};
 	
 
 	void Start()
@@ -49,6 +54,7 @@ public class MenuScreenController : MonoBehaviour
 			_dataController.currentUser=new User();
 			_dataController.currentUser.usr = "siaii";
 			_dataController.currentUser.chr = "pipo-nekonin002";
+			_dataController.currentUser.llv = 0.ToString();
 		}
 		
 		hiUser.text = "Hi, " + _dataController.currentUser.usr;
@@ -57,14 +63,22 @@ public class MenuScreenController : MonoBehaviour
 		int chrIdx = int.Parse(_dataController.currentUser.chr.Substring(12, 3));
 		playerAnimator.runtimeAnimatorController = animatorList[chrIdx - 1];
 		
+		//Update the world image shown in the menu
 		updateWorldShown(_dataController.getCurrWorld());
-		if (_dataController.getCurrWorld() > 1)
+		
+		//Handles which button is active in the menu
+		if (_dataController.getCurrWorld() == 1)
+		{
+			backButton.SetActive(false);
+			nextButton.SetActive(true);
+		}else if (_dataController.getCurrWorld() == worldImageList.Length)
 		{
 			backButton.SetActive(true);
+			nextButton.SetActive(false);
 		}
-
-		if (_dataController.getCurrWorld() < worldPrefabs.Length)
+		else
 		{
+			backButton.SetActive(true);
 			nextButton.SetActive(true);
 		}
 
@@ -76,22 +90,49 @@ public class MenuScreenController : MonoBehaviour
 			levelBaseGameObject.SetActive(true);
 			MenuScreenLoadParam.MenuLoadFromGame = false;
 		}
-		
-		
 	}
-	
-	public void SelectWorld()
-	{		
-		Vector3 camPos = camera.transform.position;
-		camPos.y = camera.GetComponent<CameraControl>().getMinY();
-		camera.transform.position = camPos;
-		activeWorld = Instantiate(worldPrefabs[_dataController.getCurrWorld() - 1], levelBaseGameObject.transform, false);
-		playerWorldMovement.setWaypoints();
-		playerWorldMovement.resetPlayer();
-		worldName.text = "World "+_dataController.getCurrWorld().ToString();
-		worldBaseGameObject.SetActive(false);
-		levelBaseGameObject.SetActive(true);
 
+	private void Update()
+	{
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			//Back button in android is mapped to escape button
+			if (Input.GetKey(KeyCode.Escape))
+			{
+				//If in level select, go back to world select. If in world select, show exit confirmation
+				if (levelBaseGameObject.activeSelf)
+				{
+					BackToWorld();
+				}
+				else
+				{
+					OnExitButton();
+				}
+			}
+		}
+	}
+
+	public void SelectWorld()
+	{
+		//If the current world is 6, the it is the custom level
+		if (_dataController.getCurrWorld() > worldPrefabs.Length)
+		{
+			MenuScreenLoadParam.MenuLoadFromGame = false;
+			SceneManager.LoadSceneAsync("CustomLevels");
+		}
+		else
+		{
+			//Resets camera position, instantiate the world object to show, and assign relevant variables.
+			Vector3 camPos = camera.transform.position;
+			camPos.y = camera.GetComponent<CameraControl>().getMinY();
+			camera.transform.position = camPos;
+			activeWorld = Instantiate(worldPrefabs[_dataController.getCurrWorld() - 1], levelBaseGameObject.transform, false);
+			playerWorldMovement.setWaypoints();
+			playerWorldMovement.resetPlayer();
+			worldName.text = "World "+_dataController.getCurrWorld().ToString();
+			worldBaseGameObject.SetActive(false);
+			levelBaseGameObject.SetActive(true);	
+		}
 	}
 
 	public void BackToWorld()
@@ -118,6 +159,7 @@ public class MenuScreenController : MonoBehaviour
 
 	public void StartGame()
 	{
+		_dataController.setCustom(false);
 		//Saves current position before entering gameplay
 		MenuScreenLoadParam.currentLevel = _dataController.getCurrLevel();
 		SceneManager.LoadScene("Turn-Based");
@@ -152,7 +194,26 @@ public class MenuScreenController : MonoBehaviour
 
 	private void updateWorldShown(int world)
 	{
-		worldImage.GetComponentInChildren<TextMeshProUGUI>().text = "World " + world.ToString();
+		var txts=worldImage.GetComponentsInChildren<TextMeshProUGUI>();
+		for (var i = 0; i < txts.Length; ++i)
+		{
+			if (txts[i].name == "worldName")
+			{
+				if (world <= worldPrefabs.Length)
+				{
+					txts[i].text = "World " + world.ToString();
+				}
+				else
+				{
+					txts[i].text = "Custom";
+				}
+			}
+			else if (txts[i].name == "worldTopic")
+			{
+				txts[i].text = worldTopic[world - 1];
+			}
+		}
+		
 		//Gets all children of worldImage and iterates all until it finds the one with the name "Image"
 		Component[] list = worldImage.GetComponentsInChildren<Image>();
 		foreach (Image img in list)
@@ -164,6 +225,8 @@ public class MenuScreenController : MonoBehaviour
 				img.sprite = worldImageList[world - 1];
 			}
 		}
+		
+
 	}
 	public void nextLevelButton()
 	{
@@ -174,10 +237,11 @@ public class MenuScreenController : MonoBehaviour
 		if (currWorld == 2)
 		{
 			backButton.SetActive(true);
-		}else if (currWorld == worldPrefabs.Length)
+		}else if (currWorld == worldPrefabs.Length+1)
 		{
 			nextButton.SetActive(false);
 		}
+		
 		updateWorldShown(currWorld);
 		
 	}
@@ -191,11 +255,14 @@ public class MenuScreenController : MonoBehaviour
 		if (currWorld == 1)
 		{
 			backButton.SetActive(false);
-		}else if (currWorld == worldPrefabs.Length - 1)
+		}else if (currWorld == worldPrefabs.Length)
 		{
 			nextButton.SetActive(true);
 		}
-		updateWorldShown(currWorld);
+		if (currWorld <= worldPrefabs.Length)
+		{
+			updateWorldShown(currWorld);
+		}
 	}
 
 	public void LeaderboardButton()
@@ -234,5 +301,30 @@ public class MenuScreenController : MonoBehaviour
 	public void OnCloseSettingsButton()
 	{
 		settingsPopup.SetActive(false);
+	}
+
+	public void OnExitButton()
+	{
+		exitPopup.SetActive(true);
+	}
+
+	public void OnExitCancel()
+	{
+		exitPopup.SetActive(false);
+	}
+
+	public void OnExitConfirm()
+	{
+		Application.Quit();
+	}
+
+	public void OnCreditsButton()
+	{
+		creditsPopup.SetActive(true);
+	}
+
+	public void OnCreditsClose()
+	{
+		creditsPopup.SetActive(false);
 	}
 }

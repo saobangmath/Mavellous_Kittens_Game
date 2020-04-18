@@ -61,14 +61,6 @@ public class FirebaseScript : MonoBehaviour
         isLoading = false;
 
         Debug.Log("Data Finished Loading");
-        /*for (int i = 0; i < worldDataResult.Length; ++i)
-        {
-            Debug.Log("world: "+worldDataResult[i].WorldName);
-            for (int j = 0; j < worldDataResult[i].LvlData.Length; ++j)
-            {
-                Debug.Log("level: "+worldDataResult[i].LvlData[j].name);
-            }
-        }*/
     }
 
 
@@ -82,7 +74,22 @@ public class FirebaseScript : MonoBehaviour
     {
         return currentUser;
     }
-    
+
+    public List<QnA> GetQuestionData()
+    {
+        return _questionList;
+    }
+
+    public List<RoundData> GetLevelData()
+    {
+        return _levelList;
+    }
+
+    public async void AddLevel(RoundData newLevel)
+    {
+        _levelList.Add(newLevel);
+        await PostNewLevel(newLevel);
+    }
 
     public async Task LoadGameData()
     {
@@ -197,6 +204,9 @@ public class FirebaseScript : MonoBehaviour
                         }else if (question.Key == "lv")
                         {
                             lvlResult.name = question.Value.ToString();
+                        }else if (question.Key == "code")
+                        {
+                            lvlResult.lvlId = question.Value.ToString();
                         }
                         else
                         {
@@ -210,11 +220,8 @@ public class FirebaseScript : MonoBehaviour
                             }
                         }
                     }
-
-                    lvlResult.lvlId = lvlEnumerator.Current.Key;
                     _levelList.Add(lvlResult);
                 }
-                
             }
         });
     }
@@ -292,7 +299,7 @@ public class FirebaseScript : MonoBehaviour
                 {
                     //Fallback user incase the user is found (should not be the case)
                     userResult.usr = "siaii";
-                    userResult.llv = "1";
+                    userResult.llv = "0";
                     userResult.chr = "pipo-nekonin004";
                 }
             }
@@ -313,5 +320,24 @@ public class FirebaseScript : MonoBehaviour
     {
         await _userReference.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("chr").SetValueAsync(name);
     }
-    
+
+    public async void UpdateUserLLv(string llv)
+    {
+        await _userReference.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("llv").SetValueAsync(llv);
+    }
+
+    public Task PostNewLevel(RoundData newLevel)
+    {
+        var newLvlRef=_levelReference.Push();
+        newLvlRef.Child("boss").SetValueAsync(newLevel.boss);
+        newLvlRef.Child("code").SetValueAsync(newLevel.lvlId);
+        newLvlRef.Child("lv").SetValueAsync(newLevel.name);
+        string qNum = "q";
+        for (var i = 0; i < newLevel.questions.Count; ++i)
+        {
+            newLvlRef.Child(qNum + (i + 1).ToString()).SetValueAsync(newLevel.questions[i].questionId);
+        }
+
+        return Task.CompletedTask;
+    }
 }
