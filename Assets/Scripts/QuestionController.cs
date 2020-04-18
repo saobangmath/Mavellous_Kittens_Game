@@ -133,9 +133,9 @@ public class QuestionController : MonoBehaviour
         isRoundActive = false;
         timeRemaining = 30f;
         currQidx++;
-        //If there are still questions in the level and the player is still alive
-        Debug.Log(_turnController.GetPlayerHP());
-        if (currQidx < currentRoundData.questions.Count && _turnController.GetPlayerHP()>1)
+
+        //If there are still questions in the level and the player is still alive, go to next question
+        if (currQidx < currentRoundData.questions.Count && _turnController.GetPlayerHP()>0)
         {
             nextButton.SetActive(true);
         }
@@ -161,7 +161,7 @@ public class QuestionController : MonoBehaviour
         PostScore();
         levelFinishPrompt.SetActive(true);
         //If player loses, don't increase llv
-        if (_turnController.GetPlayerHP() == 1)
+        if (_turnController.GetPlayerHP() == 0)
         {
             levelFinishTxt.text = "You Lose!";
         }
