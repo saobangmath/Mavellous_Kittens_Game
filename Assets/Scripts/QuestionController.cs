@@ -38,9 +38,10 @@ public class QuestionController : MonoBehaviour
         _firebaseScript = FindObjectOfType<FirebaseScript>();
         _turnController = GetComponent<TurnController>();
 
-
+        
         if (_dataController != null)
         {
+            //Different format of level id between custom level and default level
             if (_dataController.getCustom())
             {
                 currentRoundData = _dataController.GetCurrentRoundData(_dataController.getLvlID());
@@ -55,15 +56,7 @@ public class QuestionController : MonoBehaviour
                 qData.Add(currentRoundData.questions[i]);
             }            
         }
-        else
-        {
-            QnA testQ=new QnA();
-            testQ.QuestionText = "1+1=?";        //Test question to remove later
-            testQ.ansChoice = new string[] {"a. 1", "b. 2", "c. 3", "d. 4"};
-            testQ.CorrectAns = 2;
-            qData.Add(testQ);
-        }
-        timeRemaining = 20f;
+        timeRemaining = 30f;
         UpdateQuestion(currQidx);
         isRoundActive = true;
     }
@@ -99,12 +92,16 @@ public class QuestionController : MonoBehaviour
     public void CheckAns(int choice)
     {
         isRoundActive = false;
+        //Locks the user's choice by making all buttons not clickable
         for (int i = 0; i < currentRoundData.questions[currQidx].ansChoice.Length; ++i)
         {
             choiceButtons[i].interactable = false;
         }
+        
         if (choice != qData[currQidx].CorrectAns)        //Checks if the chosen answer is correct
         {
+            //When player chooses the wrong answer, shows the correct answer and marks player's answer as wrong and
+            //enemy atacks
             choiceButtons[choice - 1].GetComponent<Image>().sprite = wrongButtonImage;
             for (int i = 0; i < choiceButtons.Length; ++i)
             {
@@ -117,6 +114,7 @@ public class QuestionController : MonoBehaviour
         }
         else
         {
+            //When player chooses the correct answer, increase user's score and player attacks
             score += (int) timeRemaining;
             choiceButtons[choice - 1].GetComponent<Image>().sprite = correctButtonImage;
             _turnController.PlayerAttack();
@@ -136,6 +134,7 @@ public class QuestionController : MonoBehaviour
 
         //If there are still questions in the level and the player is still alive, go to next question
         if (currQidx < currentRoundData.questions.Count && _turnController.GetPlayerHP()>0)
+
         {
             nextButton.SetActive(true);
         }
@@ -150,6 +149,8 @@ public class QuestionController : MonoBehaviour
         nextButton.SetActive(false);
         isRoundActive = true;
         UpdateQuestion(currQidx);
+        
+        //Make all the button clickable again
         for (int i = 0; i < currentRoundData.questions[currQidx].ansChoice.Length; ++i)
         {
             choiceButtons[i].interactable = true;
@@ -178,6 +179,7 @@ public class QuestionController : MonoBehaviour
         if (_dataController.currentUser.usr != "siaii")
         {
             Attempt currAttempt;
+            //Different lvl ID format of custom level and default level
             if (_dataController.getCustom())
             {
                 currAttempt=new Attempt(_dataController.getCurrWorld(), _dataController.getLvlID(), score, FirebaseAuth.DefaultInstance.CurrentUser.UserId);
