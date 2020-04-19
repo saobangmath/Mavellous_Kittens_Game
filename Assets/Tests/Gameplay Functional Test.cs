@@ -84,6 +84,7 @@ namespace Tests
             int testLevel = 1;
             string testLevelId = "2349";
             int totalScore = 0;
+            int[] testAnswers = new int[] { 1, 2, 1 };
 
             SceneManager.LoadScene("Persistent"); // Load Persistent Screen to initialise Data Controller
             yield return new WaitForSeconds(4f); // Wait for initialisation to finish
@@ -105,18 +106,16 @@ namespace Tests
             QuestionController questionController = gameController.GetComponent<QuestionController>();
             int prevHP = turnController.GetPlayerHP(); // get initial healthpoints
 
-            questionController.CheckAns(1); // Correct answer for the first question is 2
+            for (int i = 0; i < testAnswers.Length - 1; i++)
+            {
+                questionController.CheckAns(testAnswers[i]); // Correct answer for the first question is 2
+                yield return new WaitForSeconds(4f); // wait for attack
+                questionController.StartNewRound(); // advance to next question
+            }
+
+            questionController.CheckAns(testAnswers[testAnswers.Length - 1]); // Correct answer for the first question is 2
             yield return new WaitForSeconds(4f); // wait for attack
 
-            questionController.StartNewRound(); // advance to next question
-
-            questionController.CheckAns(2); // Correct answer for the second question is 1
-            yield return new WaitForSeconds(4f); // wait for attack
-
-            questionController.StartNewRound(); // advance to next question
-
-            questionController.CheckAns(1); // Correct answer for the third question is 2
-            yield return new WaitForSeconds(4f); // wait for attack
             int newHP = turnController.GetPlayerHP(); // get player healthpoints
 
             GameObject levelFinished = GameObject.Find("LevelFinished");
@@ -146,6 +145,8 @@ namespace Tests
             int testLevel = 1;
             string testLevelId = "2349";
             int totalScore = 0;
+            int[] testAnswers = new int[] { 2, 1, 2, 1, 4 };
+
 
             SceneManager.LoadScene("Persistent"); // Load Persistent Screen to initialise Data Controller
             yield return new WaitForSeconds(4f); // Wait for initialisation to finish
@@ -164,30 +165,19 @@ namespace Tests
             GameObject gameController = GameObject.Find("GameController");
             TurnController turnController = gameController.GetComponent<TurnController>();
 
+            //TextMeshProUGUI qnTMP = GameObject.Find("Question").GetComponent<TextMeshProUGUI>();
+
             QuestionController questionController = gameController.GetComponent<QuestionController>();
             int prevHP = turnController.GetPlayerHP(); // get initial healthpoints
 
-            questionController.CheckAns(2); // Correct answer for the first question is 2
-            yield return new WaitForSeconds(4f); // wait for attack
+            for (int i = 0; i < testAnswers.Length - 1; i++)
+            {
+                questionController.CheckAns(testAnswers[i]); // Correct answer for the first question is 2
+                yield return new WaitForSeconds(4f); // wait for attack
+                questionController.StartNewRound(); // advance to next question
+            }
 
-            questionController.StartNewRound(); // advance to next question
-
-            questionController.CheckAns(1); // Correct answer for the second question is 1
-            yield return new WaitForSeconds(4f); // wait for attack
-
-            questionController.StartNewRound(); // advance to next question
-
-            questionController.CheckAns(2); // Correct answer for the third question is 2
-            yield return new WaitForSeconds(4f); // wait for attack
-
-            questionController.StartNewRound(); // advance to next question
-
-            questionController.CheckAns(1); // Correct answer for the fourth question is 1
-            yield return new WaitForSeconds(4f); // wait for attack
-
-            questionController.StartNewRound(); // advance to next question
-
-            questionController.CheckAns(4); // Correct answer for the fifth question is 4
+            questionController.CheckAns(testAnswers[testAnswers.Length - 1]); // Correct answer for the first question is 2
             yield return new WaitForSeconds(4f); // wait for attack
 
             int newHP = turnController.GetPlayerHP(); // get player healthpoints
