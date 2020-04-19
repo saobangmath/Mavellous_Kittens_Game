@@ -32,13 +32,14 @@ namespace Tests
             // Find the script of the Level Selection
             LevelScript levelScript = GameObject.FindObjectOfType<LevelScript>();
             levelScript.ButtonPasser(levelToTest); // Select the level to test
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(5f);
             menuScreenController.LeaderboardButton(); // Enter the leaderboard for the Level
             yield return new WaitForSeconds(2f);
             // Compare the world and level used in Leaderboard Subsystem to Test input.
             AttemptsFirebase leaderboardController = GameObject.Find("HighscoreTable").GetComponent<AttemptsFirebase>();
             Assert.AreEqual(worldToTest, leaderboardController.worldId);
             Assert.AreEqual(levelToTest.ToString(), leaderboardController.levelId);
+            Application.Quit();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Tests
 
             Assert.AreEqual(testLevelId, returnedLevelId);
 
-
+            Application.Quit();
         }
     }
 }

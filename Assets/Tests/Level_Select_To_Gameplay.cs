@@ -43,6 +43,8 @@ namespace Tests
             QuestionController questionScript = gameController.GetComponent<QuestionController>(); // Get the script responsible for questions
             // Compare the Test input with the World and Level used to initialise the game
             Assert.AreEqual("World " + worldToTest.ToString() + " Level " + levelToTest.ToString(), questionScript.getRoundData().name);
+
+            Application.Quit();
         }
     }
 }

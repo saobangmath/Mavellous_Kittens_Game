@@ -46,6 +46,7 @@ namespace Tests
 
             Assert.AreEqual(testWorld, leaderboardController.worldId);
             Assert.AreEqual(testLevel.ToString(), leaderboardController.levelId);
+            Application.Quit();
         }
     }
 }

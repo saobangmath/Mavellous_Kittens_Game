@@ -45,4 +45,9 @@ public class ToggleContainer : MonoBehaviour
             t.SetActive(true);
         }
     }
+
+    public List<GameObject> getToggles()
+    {
+        return _toggles;
+    }
 }

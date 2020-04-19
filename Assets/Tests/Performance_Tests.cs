@@ -24,6 +24,7 @@ namespace Tests
                 yield return new WaitForSecondsRealtime(4.5f);
                 Assert.AreEqual(SceneManager.GetActiveScene().name, "MenuScreen");
             }
+            Application.Quit();
         }
 
         [UnityTest]
