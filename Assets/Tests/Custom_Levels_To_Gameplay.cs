@@ -8,7 +8,7 @@ using TMPro;
 
 namespace Tests
 {
-    public class CustomToTurn
+    public class CustomLevelsToGameplay
     {
         [UnityTest]
         public IEnumerator Custom_Transfers_LevelID_Correctly_To_TurnBased()

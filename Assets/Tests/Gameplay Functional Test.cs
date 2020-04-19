@@ -13,7 +13,7 @@ using System.Numerics;
 
 namespace Tests
 {
-    public class Gameplay_Functional_Test
+    public class GameplayFunctionalTest
     {
 
         [UnityTest]
