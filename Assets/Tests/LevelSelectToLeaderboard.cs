@@ -39,7 +39,6 @@ namespace Tests
             AttemptsFirebase leaderboardController = GameObject.Find("HighscoreTable").GetComponent<AttemptsFirebase>();
             Assert.AreEqual(worldToTest, leaderboardController.worldId);
             Assert.AreEqual(levelToTest.ToString(), leaderboardController.levelId);
-
         }
     }
 }
