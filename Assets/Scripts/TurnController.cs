@@ -63,6 +63,7 @@ public class TurnController : MonoBehaviour
         {
             attacking = true;
             StartCoroutine(delayedEnemyAttack());
+            playerHP = _playerScript.GetCurrentHp();
         }
     }
 
@@ -81,7 +82,6 @@ public class TurnController : MonoBehaviour
         _enemyScript.StartCoroutine("runAttack");
         yield return new WaitUntil(() => _enemyScript.isAttacking == false);        //Delay until the animation is finished
         attacking = false;
-        playerHP = _playerScript.GetCurrentHp();
         _questionController.EndRound();
     }
 

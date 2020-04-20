@@ -169,8 +169,6 @@ public class CustomLevelController : MonoBehaviour
 
     public void setBoss(int bossId)
     {
-        if (bossId < 0 || bossId >= enemySpriteNames.Length)
-            return;
         enemyChrIdx = bossId;
         UpdateEnemyChr(bossId);
     }

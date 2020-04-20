@@ -163,7 +163,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.UnityTestRunner.UnityTestRunner
+    Android: com.UnityForce.MarvellousKittens
     Standalone: com.Company.ProductName
   buildNumber: {}
   AndroidBundleVersionCode: 1
