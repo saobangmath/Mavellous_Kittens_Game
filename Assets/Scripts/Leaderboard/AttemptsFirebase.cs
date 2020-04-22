@@ -172,7 +172,7 @@ public class AttemptsFirebase : MonoBehaviour
         int k = 0;
         foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
         {
-            if (addedUsers.Contains(highscoreEntry.userId) || Int32.Parse(highscoreEntry.score) > 300)
+            if (addedUsers.Contains(highscoreEntry.userId) || Int32.Parse(highscoreEntry.score) > 150)
                 continue;
             CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
             addedUsers.Add(highscoreEntry.userId);
