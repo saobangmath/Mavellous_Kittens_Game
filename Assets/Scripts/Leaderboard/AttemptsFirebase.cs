@@ -7,6 +7,8 @@ using Firebase.Unity.Editor;
 using Firebase.Database;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
+
 
 public class AttemptsFirebase : MonoBehaviour
 {
@@ -150,24 +152,30 @@ public class AttemptsFirebase : MonoBehaviour
                 {
                     name = userList[j].usr;
                     score = atmpt.score;
-                    HighscoreEntry entry = new HighscoreEntry(name, score);
+                    HighscoreEntry entry = new HighscoreEntry(name, score, userList[j].userId);
                     highscoreEntryList.Add(entry);
                 }
             }
         }
     }
 
+
     //====================================Display Functions===============================================================
     public void DisplayHighscoreInTable(List<HighscoreEntry> highscoreEntryList)
     {
+        //Initialise variable to keep track of already added users
+        List<string> addedUsers = new List<string>();
+
         //display objects on UI using template and container
         highscores = new Highscores(highscoreEntryList);
         SortHighscores(highscores);
         int k = 0;
         foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
         {
-
+            if (addedUsers.Contains(highscoreEntry.userId) || Int32.Parse(highscoreEntry.score) > 300)
+                continue;
             CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
+            addedUsers.Add(highscoreEntry.userId);
             k++;
             if (k > 9) break;
         }

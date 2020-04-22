@@ -17,9 +17,11 @@ public class HighscoreEntry
 {
     public string name;
     public string score;
-    public HighscoreEntry(string name, string score)
+    public string userId;
+    public HighscoreEntry(string name, string score, string userId)
     {
         this.name = name;
         this.score = score;
+        this.userId = userId;
     }
 }
