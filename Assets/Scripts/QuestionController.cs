@@ -89,6 +89,7 @@ public class QuestionController : MonoBehaviour
     /// <summary>
     /// This method updates the display of the question text and choices for each question.
     /// </summary>
+    /// <param name="index">The index of the question</param>
     private void UpdateQuestion(int index)
     {
         for (int i = 0; i < choiceButtons.Length; ++i)
@@ -105,6 +106,7 @@ public class QuestionController : MonoBehaviour
     /// <summary>
     /// This method checks if the answer selected is correct. It also displays the correct answer and the option selected.
     /// </summary>
+    /// <param name="choice">The index of the option selected</param>
     public void CheckAns(int choice)
     {
         isRoundActive = false;
