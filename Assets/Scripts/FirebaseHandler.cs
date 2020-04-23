@@ -49,8 +49,10 @@ public class FirebaseHandler : MonoBehaviour
             }
         });
     }
-    
-    // Track state changes of the auth object.
+
+    /// <summary>
+    /// Track state changes of the auth object.
+    /// </summary>
     void AuthStateChanged(object sender, System.EventArgs eventArgs) {
         if (auth.CurrentUser != user) {
             bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null;
@@ -70,7 +72,10 @@ public class FirebaseHandler : MonoBehaviour
         auth = null;
     }
 
-    // Check if user is registered in the database
+
+    /// <summary>
+    /// Check if user is registered in the database
+    /// </summary>
     public static async Task<bool> CheckIfUserIsRegistered()
     {
         FirebaseUser currentUser = FirebaseAuth.DefaultInstance.CurrentUser;
@@ -94,27 +99,35 @@ public class FirebaseHandler : MonoBehaviour
         return registered;
     }
 
-    // Create User object for the new user
+    /// <summary>
+    /// Create User object for the new user
+    /// </summary>
     public static void CreateNewUser(string userId)
     {
         _newUserId = userId;
         _currentUser = new User();
     }
 
-    // Save user's character selection
+    /// <summary>
+    /// Save user's character selection
+    /// </summary>
     public static void SaveCharacter(Sprite sprite)
     {
         string name = sprite.name.Remove(sprite.name.Length - 2);
         _currentUser.chr = name;
     }
 
-    // Save user's username input
+    /// <summary>
+    /// Save user's username input
+    /// </summary>
     public static void SaveUsername(string username)
     {
         _currentUser.usr = username;
     }
 
-    // Create new user in the database
+    /// <summary>
+    /// Create new user in the database
+    /// </summary>
     public static void WriteNewUser()
     {
         string json = _currentUser.SaveToJsonString();
