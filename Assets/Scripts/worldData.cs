@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Object representing world data
+/// </summary>
 public class worldData
 {
     private string worldName;

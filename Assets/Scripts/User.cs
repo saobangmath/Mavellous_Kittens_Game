@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Object representing user
+/// </summary>
 public class User
 {
     // Character sprite chosen by the user

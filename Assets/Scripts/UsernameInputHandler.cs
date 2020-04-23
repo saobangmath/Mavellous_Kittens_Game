@@ -2,6 +2,9 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles username input on the username selection screen
+/// </summary>
 public class UsernameInputHandler : MonoBehaviour
 {
     public InputField usernameField;
