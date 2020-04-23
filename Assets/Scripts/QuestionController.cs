@@ -231,6 +231,7 @@ public class QuestionController : MonoBehaviour
     /// <summary>
     /// This method returns the score of the player.
     /// </summary>
+    /// <returns> Score of player </returns>
     public int getScore()
     {
         return score;
@@ -239,6 +240,7 @@ public class QuestionController : MonoBehaviour
     /// <summary>
     /// This method returns the roundData of the level.
     /// </summary>
+    /// <returns> roundData of the level </returns>
     public RoundData getRoundData()
     {
         return currentRoundData;

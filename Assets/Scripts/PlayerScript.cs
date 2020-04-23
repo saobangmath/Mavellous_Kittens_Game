@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
+/// <summary>
+/// This class handles the attack animations of the player and the effect on the enemy.
+/// </summary>
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] private HP_Bar bar;
@@ -16,6 +19,10 @@ public class PlayerScript : MonoBehaviour
     private Animator _anim;
 
     public bool isAttacking = false;
+    
+    /// <summary>
+    /// The Start() method initialises the Animator and Enemy Script.
+    /// </summary>
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +30,9 @@ public class PlayerScript : MonoBehaviour
         _enemyScript = enemy.GetComponent<EnemyScript>();
     }
 
+    /// <summary>
+    /// This method spawns a weapon for the player to attack the enemy. It provides the animation of the player attack.
+    /// </summary>
     IEnumerator runAttack()
     {
         isAttacking = true;
@@ -37,6 +47,9 @@ public class PlayerScript : MonoBehaviour
         isAttacking = false;
     }
 
+    /// <summary>
+    /// This method decreases the health points in the healthpoint bar of the enemy
+    /// </summary>
     public void DecreaseHP()
     {
         _anim.SetTrigger("hit");
@@ -44,6 +57,9 @@ public class PlayerScript : MonoBehaviour
         _hp -= 1;
     }
 
+    /// <summary>
+    /// This method detects if there is a 2D collision.
+    /// </summary>
     public void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("EnemyWeapon"))
@@ -52,6 +68,10 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method returns the health points of the player.
+    /// </summary>
+    /// <returns> Health points of the player </returns>
     public int GetCurrentHp()
     {
         return _hp;
