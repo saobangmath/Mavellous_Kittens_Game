@@ -6,7 +6,9 @@ public class UsernameInputHandler : MonoBehaviour
 {
     public InputField usernameField;
     
-    // Handles click on save button in username selection screen
+    /// <summary>
+    /// Handles click on save button in username selection screen
+    /// </summary>
     public void OnClickSaveUsername()
     {
         string username = usernameField.text;
