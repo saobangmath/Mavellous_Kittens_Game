@@ -9,7 +9,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 
-
+/// <summary>
+/// the AttemptsFirebase class responsible for all calling to the Firebase database server 
+/// </summary>
 public class AttemptsFirebase : MonoBehaviour
 {
     private DatabaseReference _Attempts;
@@ -28,6 +30,9 @@ public class AttemptsFirebase : MonoBehaviour
     public Transform entryContainer;
     public Transform entryTemplate;
     public List<Transform> highscoreEntryTransformList = new List<Transform>(10);
+    /// <summary>
+    /// the Awake() function triggered to set up the url connection to the Firebase database server and set up other required variables for interaction with the cloud database
+    /// </summary>
     void Awake()
     {
         // Set up editor before calling into the realtime database.
@@ -40,7 +45,9 @@ public class AttemptsFirebase : MonoBehaviour
         
         _dataController = FindObjectOfType<DataController>();
     }
-
+    /// <summary>
+    /// the Start() function is trigger to display the list of available top 10 players for a specific level and world id
+    /// </summary>
     private async void Start()
     {
         if (_dataController.getCustom())
@@ -63,7 +70,10 @@ public class AttemptsFirebase : MonoBehaviour
 
         
     }
-
+    /// <summary>
+    /// the CreateDbReference() to initialize the suitable database section for each variables 
+    /// e.g. _Attempts should be corresponding to the 
+    /// </summary>
     private void CreateDbReference()
     {
         //get the root reference location of the database
@@ -72,8 +82,9 @@ public class AttemptsFirebase : MonoBehaviour
         _Users = refDB.Child("Users");
     }
 
-    //my purpose is to just read the data and display it on the leaderboard, no writing, just reading
-
+    /// <summary>
+    ///  GetAttemptDataFirebase()  purpose is just read the data and display it on the leaderboard, no writing, just reading
+    /// </summary>
     public async Task GetAttemptDataFirebase()
     {
         //basically i only need the score and user id of that particular level
@@ -107,7 +118,10 @@ public class AttemptsFirebase : MonoBehaviour
                 }
             });
     }
-
+    /// <summary>
+    /// the function to get the user data to use for displaying in the leaderboard later
+    /// </summary>
+    /// <returns></returns>
     public async Task GetUserData()
     {
         await FirebaseDatabase.DefaultInstance.GetReference("Users").GetValueAsync().ContinueWith(task =>
@@ -138,7 +152,9 @@ public class AttemptsFirebase : MonoBehaviour
                 }
             });
     }
-
+    /// <summary>
+    /// the CreateHighscoreEntryList to create a list of highscore entry
+    /// </summary>
     public void CreateHighscoreEntryList()
     {
         string name;
@@ -160,7 +176,10 @@ public class AttemptsFirebase : MonoBehaviour
     }
 
 
-    //====================================Display Functions===============================================================
+    /// <summary>
+    /// DisplayHighscoreInTable(highscoreEntryList) triggered to display the top 10 highscore in the leaderboard
+    /// </summary>
+    /// <param name="highscoreEntryList">list of highscore entry</param>
     public void DisplayHighscoreInTable(List<HighscoreEntry> highscoreEntryList)
     {
         //Initialise variable to keep track of already added users
@@ -180,7 +199,12 @@ public class AttemptsFirebase : MonoBehaviour
             if (k > 9) break;
         }
     }
-
+    /// <summary>
+    /// The CreateHighscoreEntryTransform(highscoreEntry, container, transformList) is triggered to create a high score entry transformation
+    /// </summary>
+    /// <param name="highscoreEntry">the high score entry </param>
+    /// <param name="container">the transform container object</param>
+    /// <param name="transformList">the transform list of Transformation object</param>
     public void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
     {
         float templateHeight = 31f;
@@ -234,7 +258,10 @@ public class AttemptsFirebase : MonoBehaviour
 
         transformList.Add(entryTransform);
     }
-
+    /// <summary>
+    /// this function is triggered to sort the list of the highscores
+    /// </summary>
+    /// <param name="highscores">List of highscore for many players</param>
     public void SortHighscores(Highscores highscores)
     {
         for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
@@ -250,7 +277,9 @@ public class AttemptsFirebase : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// BackToWorldButton() is triggered to return to the main menu scence   
+    /// </summary>
     public void BackToWorldButton()
     {
         SceneManager.LoadSceneAsync("MenuScreen");
