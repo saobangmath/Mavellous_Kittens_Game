@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//Acts as a place to pass data to load MenuScreen
+
+/// <summary>
+/// Acts as a place to pass data to load MenuScreen
+/// </summary>
 public static class MenuScreenLoadParam
 {
     public static bool MenuLoadFromGame;
