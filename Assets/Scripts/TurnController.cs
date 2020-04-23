@@ -151,6 +151,7 @@ public class TurnController : MonoBehaviour
     /// <summary>
     /// This method returns the health points of the player.
     /// </summary>
+    /// <returns>Returns health points of player.</returns>
     public int GetPlayerHP()
     {
         return playerHP;
