@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class performs the animations for the clouds in the background.
+/// </summary>
 public class CloudPingPong : MonoBehaviour
 {
     [SerializeField] private float minX=-5.6f;
@@ -10,6 +13,10 @@ public class CloudPingPong : MonoBehaviour
     private float len;
     private bool goRight = true;
     private Vector3 pos;
+    
+    /// <summary>
+    /// In the Start() method, the positions of the objects are first initialised.
+    /// </summary>
     // Start is called before the first frame update
     void Start()
     {
@@ -18,12 +25,18 @@ public class CloudPingPong : MonoBehaviour
         t = (pos.x - minX) / len;
     }
 
+    /// <summary>
+    /// The PingPong() Coroutine is continuously called in this method.
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
         StartCoroutine(PingPong());
     }
 
+    /// <summary>
+    /// This method performs the animation for the cloud to go back and forth in the background.
+    /// </summary>
     private IEnumerator PingPong()
     {   
         //Makes the cloud go back and forth in the background
