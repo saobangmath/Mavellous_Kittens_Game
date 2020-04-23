@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class creates a serializable dictionary for enemy animations.
+/// </summary>
 public class EnemyAnimatorMap : MonoBehaviour
 {
     //Basically a serializable dictionary for the enemy animations
@@ -14,6 +17,10 @@ public class EnemyAnimatorMap : MonoBehaviour
 
     public EnemyAnimatorEntry[] enemyAnimation;
 
+    /// <summary>
+    /// This method returns the animation controller of a desired name.
+    /// </summary>
+    /// <param name = "nm"> Name of animation controller </param>
     public RuntimeAnimatorController GetAnimatorController(string nm)
     {
         for (int i = 0; i < enemyAnimation.Length; ++i)
