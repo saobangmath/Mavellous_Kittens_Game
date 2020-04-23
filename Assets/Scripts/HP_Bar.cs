@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 
+/// <summary>
+/// This class handles the animation for the healthpoints bar of the player and enemy.
+/// </summary>
 public class HP_Bar : MonoBehaviour
 {
     [SerializeField] private Texture2D tex;
 
     [SerializeField] private GameObject entity;
     private SpriteRenderer _spriteRenderer;
-
+    
+    /// <summary>
+    /// Sprite Renderer is initialised to render the sprites.
+    /// </summary>
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +23,11 @@ public class HP_Bar : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// This method provides the animation that decreases the health points on the bar.
+    /// </summary>
+    /// <param name = "scaledPrevHp">Healthpoints before the decrease </param>
+    /// <param name = "scaledCurrHp">Healthpoints after the decrease </param>
     public IEnumerator UpdateBar(float scaledPrevHp, float scaledCurrHp)
     {
         float t = 0;
