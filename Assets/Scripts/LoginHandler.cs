@@ -6,6 +6,10 @@ using Google;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+/// <summary>
+/// The main controller for handling Facebook and Google log in
+/// </summary>
 public class LoginHandler : MonoBehaviour
 {
     public string webClientId = "942471948637-i2vg6skgrvjun1t3jpuglvthrtdr33ij.apps.googleusercontent.com";
@@ -21,7 +25,9 @@ public class LoginHandler : MonoBehaviour
         InitializeFacebookSignIn();
     }
 
-    // Initialize Google Sign In SDK
+    /// <summary>
+    /// Initialise Google SDK with the configuration details
+    /// </summary>
     private void InitializeGoogleSignIn()
     {
         // Create configuration for Google Sign In SDK
@@ -34,14 +40,18 @@ public class LoginHandler : MonoBehaviour
         Debug.Log("Google SDK Initialized");
     }
 
-    // Handle click on Google Sign In Button
+    /// <summary>
+    /// Handles the Google Sign In button
+    /// </summary>
     public void OnGoogleSignInClick()
     {
         Debug.Log("Google Sign In selected");
         SignInGoogle();
     }
 
-    // Sign in to Google
+    /// <summary>
+    /// Triggers the browser for user to sign into google.
+    /// </summary>
     private void SignInGoogle()
     {
         GoogleSignIn.Configuration = googleConfiguration;
@@ -51,7 +61,12 @@ public class LoginHandler : MonoBehaviour
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
         Debug.Log("User Signed In using Google");
     }
-    
+
+    /// <summary>
+    /// Function call when Google sign in is complete. It takes a task parameter with consists of the successful/unsuccessful authentication details.
+    /// It checks if the status of the authentication is successful before trying to sign the user in with the resulting IdToken.
+    /// </summary>
+    /// <param name="task">The variable consisting of the completed authentication details</param>
     private void OnAuthenticationFinished(Task<GoogleSignInUser> task)
     {
         if (task.IsFaulted)
@@ -83,8 +98,11 @@ public class LoginHandler : MonoBehaviour
             GoogleSignInFirebase(task.Result.IdToken);
         }
     }
-    
-    // Retrieves Google credentials and signs in to Firebase
+
+    /// <summary>
+    /// Retrieves Google credentials and signs in to Firebase
+    /// </summary>
+    /// <param name="idToken">The id token retrieved from the completing the authentication process.</param>
     private void GoogleSignInFirebase(string idToken)
     {
         // Retrieve credentials from Google
@@ -92,7 +110,9 @@ public class LoginHandler : MonoBehaviour
         SignInFirebase(credential);
     }
 
-    // Initialize Facebook Sign In SDK
+    /// <summary>
+    /// Initialise Facebook SDK with the configuration details
+    /// </summary>
     private void InitializeFacebookSignIn()
     {
         // Check if FB has been initialized
@@ -107,8 +127,10 @@ public class LoginHandler : MonoBehaviour
             FB.ActivateApp();
         }
     }
-    
-    // Checks if FB SDK is successfully initialized
+
+    /// <summary>
+    /// Checks if FB SDK is successfully initialized
+    /// </summary>
     private void FacebookInitCallback()
     {
         if (FB.IsInitialized)
@@ -137,20 +159,31 @@ public class LoginHandler : MonoBehaviour
         }
     }
 
-    // Handle click on Facebook Sign In Button
+
+    /// <summary>
+    /// Handle click on Facebook Sign In Button
+    /// </summary>
     public void OnFacebookSignInClick()
     {
         Debug.Log("Facebook Sign In selected");
         SignInFacebook();
     }
 
-    // Sign in to Facebook
+    /// <summary>
+    /// Triggers the browser for user to sign into Facebook.
+    /// It passes the FB SDK with the back callback to this application.
+    /// </summary>
     private void SignInFacebook()
     {
         var permissions = new List<string>() {"public_profile", "email"};
         FB.LogInWithReadPermissions(permissions, AuthCallback);
     }
-    
+
+    /// <summary>
+    /// This is the function callback for when the Facebook SDK is finished with the authentication.
+    /// It passes the Callback with a result variable. This callback functions retrieves the resulting
+    /// authentication access token for facebook and attempts to sign the user in using the access token.
+    /// </summary>
     private void AuthCallback(ILoginResult result)
     {
         if (FB.IsLoggedIn)
@@ -165,14 +198,25 @@ public class LoginHandler : MonoBehaviour
         }
     }
 
-    // Retrieves facebook credentials and signs in to Firebase
+
+    /// <summary>
+    /// Get the full user credentials via the access token from authentication and sign the user into Firebase
+    /// using those credentials.
+    /// </summary>
+    /// <param name="accessToken">The access token retrieved after a successful Facebook authentication</param>
     private void FacebookSignInFirebase(AccessToken accessToken)
     {
         Credential credential = FacebookAuthProvider.GetCredential(accessToken.TokenString);
         SignInFirebase(credential);
     }
 
-    // Sign in to Firebase
+
+    /// <summary>
+    /// Sign in to firebase using the Firebase SDK with the credentials gotten from either the Facebook or Google SDK.
+    /// If the Firebase SDK fails to find an existing user using the credentials, a new user is created and it brings the user
+    /// to the input username scene rather than the game menu screen.
+    /// </summary>
+    /// <param name="credential">Credentials from Facebook or google SDK.</param>
     private void SignInFirebase(Credential credential)
     {
         auth = FirebaseAuth.DefaultInstance;
