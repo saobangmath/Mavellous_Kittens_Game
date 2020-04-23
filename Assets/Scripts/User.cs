@@ -9,12 +9,18 @@ public class User
     // Username
     public string usr;
 
+    /// <summary>
+    /// Constructor for User object. Sets the last level attribute to 0.
+    /// </summary>
     public User()
     {
         llv = "0";
     }
-
-    // Convert User object data to json format
+    
+    /// <summary>
+    /// Convert User object data to json format.
+    /// </summary>
+    /// <returns>Json String format of User object data</returns>
     public string SaveToJsonString()
     {
         return JsonUtility.ToJson(this);
