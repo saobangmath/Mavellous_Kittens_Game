@@ -5,6 +5,10 @@ using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Unity.Editor;
 
+
+/// <summary>
+/// The main controller class to handling authentication in the Firebase auth SDK
+/// </summary>
 public class FirebaseHandler : MonoBehaviour
 {
     private static DatabaseReference _reference;
