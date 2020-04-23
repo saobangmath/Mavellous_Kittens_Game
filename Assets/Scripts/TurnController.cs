@@ -5,6 +5,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// The turn controller handles the animation that shows the player and enemy attacks.
+/// </summary>
+
 public class TurnController : MonoBehaviour
 {
 
@@ -28,6 +32,10 @@ public class TurnController : MonoBehaviour
 
     private EnemyAnimatorMap _enemyAnimatorMap;
     
+    /// <summary>
+    /// In the Start() method, the enemy and player characters are first obtained. 
+    /// This is for displaying the correct animation character later on. 
+    /// </summary>
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +64,10 @@ public class TurnController : MonoBehaviour
         playerHP = _playerScript.GetCurrentHp();
     }
 
-
+    /// <summary>
+    /// This method calls the delayedEnemyAttack() method if there is no existing animation in progress.
+    /// It also updates the player's health points after the attack.
+    /// </summary>
     public void EnemyAttack()
     {
         if (!attacking)         //Checks if there is currently any attacking animation in progress
@@ -67,6 +78,9 @@ public class TurnController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method calls the delayedPlayerAttack() method if there is no existing animation in progress.
+    /// </summary>
     public void PlayerAttack()
     {
         if (!attacking)        //Checks if there is currently any attacking animation in progress
@@ -77,6 +91,9 @@ public class TurnController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method calls the _enemyScript to run the attack on the character. It also ends the question once the attack ends.
+    /// </summary>
     IEnumerator delayedEnemyAttack()
     {
         _enemyScript.StartCoroutine("runAttack");
@@ -85,6 +102,9 @@ public class TurnController : MonoBehaviour
         _questionController.EndRound();
     }
 
+    /// <summary>
+    /// This method calls the _playerScript to run the attack on the enemy. It also ends the question once the attack ends.
+    /// </summary>
     IEnumerator delayedPlayerAttack()
     {
         _playerScript.StartCoroutine("runAttack");
@@ -93,6 +113,9 @@ public class TurnController : MonoBehaviour
         _questionController.EndRound();
     }
 
+    /// <summary>
+    /// This method loads the relevant scenes (depending on whether the level is a custom level or not) once the entire level has ended.
+    /// </summary>
     public void finishLvl()
     {
         //If this is a custom game, load back to custom levels scene, else go back to level select scene
@@ -109,6 +132,9 @@ public class TurnController : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// This method loads the leaderboard for the level when the leaderboard button is selected.
+    /// </summary>
     public void LeaderboardButton()
     {
         if (_dataController.getCustom())
@@ -122,6 +148,9 @@ public class TurnController : MonoBehaviour
         SceneManager.LoadSceneAsync("Leaderboard");
     }
 
+    /// <summary>
+    /// This method returns the health points of the player.
+    /// </summary>
     public int GetPlayerHP()
     {
         return playerHP;
