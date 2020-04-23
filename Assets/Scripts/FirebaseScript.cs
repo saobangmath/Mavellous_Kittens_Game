@@ -11,6 +11,9 @@ using Firebase.Unity.Editor;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Main script for other classes to easily set and retrieve data to and from the Firebase DB
+/// </summary>
 public class FirebaseScript : MonoBehaviour
 {
 
@@ -64,33 +67,57 @@ public class FirebaseScript : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Get all the World Data within the Firebase DB
+    /// </summary>
+    /// <returns></returns>
     public worldData[] GetWorldData()
     {
         return worldDataResult;
     }
 
+    /// <summary>
+    /// Gets the data of the logged in user
+    /// </summary>
+    /// <returns></returns>
     public User GetUserData()
     {
         return currentUser;
     }
 
+    /// <summary>
+    /// Gets all Question Data within the Firebase DB
+    /// </summary>
+    /// <returns></returns>
     public List<QnA> GetQuestionData()
     {
         return _questionList;
     }
 
+    /// <summary>
+    /// Gets all Level Data within the Firebase DB
+    /// </summary>
+    /// <returns></returns>
     public List<RoundData> GetLevelData()
     {
         return _levelList;
     }
 
+    /// <summary>
+    /// Adds a new Level Data (new custom level) to the Level List and calls on <code>PostNewLevel(newLevel)</code> to submit the changes to the Firebase DB
+    /// </summary>
+    /// <param name="newLevel">The RoundData for the new level</param>
     public async void AddLevel(RoundData newLevel)
     {
         _levelList.Add(newLevel);
         await PostNewLevel(newLevel);
     }
 
+    /// <summary>
+    /// Initialises all relevant Game data from the Firebase into variables
+    /// Includes the World Data, Level Data, Questions Data and User Data.
+    /// </summary>
+    /// <returns></returns>
     public async Task LoadGameData()
     {
         await LoadQuestionData();
@@ -174,7 +201,10 @@ public class FirebaseScript : MonoBehaviour
         currentUser = await LoadUserData();
     }
 
-
+    /// <summary>
+    /// Initialises all the Level Data from the Firebase Database into the list of Levels
+    /// </summary>
+    /// <returns></returns>
     private async Task LoadLevelData()
     {
         await _levelReference.OrderByKey().GetValueAsync().ContinueWith(task =>
@@ -226,6 +256,10 @@ public class FirebaseScript : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// Initialises all the Question Data from the Firebase Database into the list of Questions
+    /// </summary>
+    /// <returns></returns>
     private async Task LoadQuestionData()
     {
 
@@ -276,6 +310,12 @@ public class FirebaseScript : MonoBehaviour
             }
         });
     }
+
+    /// <summary>
+    /// Loads the data of the signed in user from the Firebase DB
+    /// A default user details is loaded in case user is not found (Which may happen and is useful during debugging)
+    /// </summary>
+    /// <returns></returns>
     public async Task<User> LoadUserData()
     {
         User userResult = new User();
@@ -307,6 +347,10 @@ public class FirebaseScript : MonoBehaviour
         return userResult;
     }
 
+    /// <summary>
+    /// Submits a gameplay Attempt to the Firebase DB
+    /// </summary>
+    /// <param name="currAttempt">Attempt details from a resulting gameplay</param>
     public async void PostUserAttempt(Attempt currAttempt)
     {
         //Generates new entry with unique key in the database and saves the reference
@@ -316,16 +360,30 @@ public class FirebaseScript : MonoBehaviour
         await newAttemptReference.SetRawJsonValueAsync(JsonUtility.ToJson(currAttempt));
     }
 
+    /// <summary>
+    /// Update a user's character sprite. Often triggered after the user picked a new character in the
+    /// Character Selection screen.
+    /// </summary>
+    /// <param name="name">Name of the new Character sprite</param>
     public async void UpdateUserChar(string name)
     {
         await _userReference.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("chr").SetValueAsync(name);
     }
 
+    /// <summary>
+    /// Update a user's latest level in the Firebase DB
+    /// </summary>
+    /// <param name="llv">The latest level to be updated</param>
     public async void UpdateUserLLv(string llv)
     {
         await _userReference.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("llv").SetValueAsync(llv);
     }
 
+    /// <summary>
+    /// Submits a new level to the Firebase DB. Often used after a Custom Level is created in the Custom Level Scene
+    /// </summary>
+    /// <param name="newLevel">The RoundData of the new level</param>
+    /// <returns></returns>
     public Task PostNewLevel(RoundData newLevel)
     {
         var newLvlRef=_levelReference.Push();

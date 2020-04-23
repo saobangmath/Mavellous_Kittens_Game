@@ -36,7 +36,7 @@ public class DataController : MonoBehaviour
     private string lvlID;
 
     /// <summary>
-    /// Get the World that the game is currently on
+    /// Gets the World that the game is currently on
     /// </summary>
     public int getCurrWorld()
     {
@@ -44,7 +44,7 @@ public class DataController : MonoBehaviour
     }
 
     /// <summary>
-    /// Get the Level that the game is currently on
+    /// Gets the Level that the game is currently on
     /// </summary>
     public int getCurrLevel()
     {
@@ -74,7 +74,7 @@ public class DataController : MonoBehaviour
     }
 
     /// <summary>
-    /// Retrieve the isCustom variable, which tells the Game if it is starting a custom level.
+    /// Retrieves the isCustom variable, which tells the Game if it is starting a custom level.
     /// </summary>
     /// <returns></returns>
     public bool getCustom()
@@ -101,7 +101,7 @@ public class DataController : MonoBehaviour
     }
 
     /// <summary>
-    /// Get the Game's current Level ID
+    /// Gets the Game's current Level ID
     /// </summary>
     /// <returns></returns>
     public string getLvlID()
@@ -134,7 +134,7 @@ public class DataController : MonoBehaviour
     
     //Overloading the function to serve both regular levels and custom levels
     /// <summary>
-    /// Get all the data that is to be used for the gameplay.
+    /// Gets all the data that is to be used for the gameplay.
     /// </summary>
     /// <param name="currLvl">The level number that is going to be played</param>
     /// <returns></returns>
@@ -144,7 +144,7 @@ public class DataController : MonoBehaviour
     }
 
     /// <summary>
-    /// Get all the data that is to be used for the gameplay.
+    /// Gets all the data that is to be used for the gameplay.
     /// </summary>
     /// <param name="currLvl">The level ID that is going to be played</param>
     /// <returns></returns>
@@ -162,7 +162,7 @@ public class DataController : MonoBehaviour
     }
     
     /// <summary>
-    /// Get the level name
+    /// Gets the level name
     /// </summary>
     /// <param name="currLvl">The level number</param>
     /// <returns></returns>
@@ -171,7 +171,7 @@ public class DataController : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialise the game's World and Level data from the Firebase database
+    /// Initialises the game's World and Level data from the Firebase database
     /// </summary>
     public void LoadGameData()
     {
@@ -196,7 +196,7 @@ public class DataController : MonoBehaviour
     }
 
     /// <summary>
-    /// Get the user's latest level progress
+    /// Gets the user's latest level progress
     /// </summary>
     /// <returns></returns>
     public string GetUserLLv()
@@ -205,7 +205,7 @@ public class DataController : MonoBehaviour
     }
 
     /// <summary>
-    /// Increase the user's latest level progress.
+    /// Increases the user's latest level progress.
     /// </summary>
     public void IncUserLLv()
     {
