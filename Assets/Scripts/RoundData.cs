@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+/// <summary>
+/// This data structure stores the information (e.g. level id, list of qns) for each level. 
+/// </summary>
 [System.Serializable]
 public class RoundData
 {
