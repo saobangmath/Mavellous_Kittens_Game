@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+
+/// <summary>
+/// This class allows different levels to be displayed when scrolling inside the world.
+/// This is achieved by panning the camera at different frames.
+/// </summary>
 [RequireComponent(typeof(Camera))]
 public class CameraControl : MonoBehaviour
 {
@@ -16,12 +21,19 @@ public class CameraControl : MonoBehaviour
     private float minY = -4f;
 
     private bool isPanningLastFrame=false;
+    
+    /// <summary>
+    /// The camera component is initialised in the Start() method.
+    /// </summary>
     // Start is called before the first frame update
     void Start()
     {
         _camera = this.GetComponent<Camera>();
     }
 
+    /// <summary>
+    /// This method allows scrolling of the different levels inside the world.
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
@@ -40,6 +52,9 @@ public class CameraControl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method allows scrolling of the different levels inside the world using touch control.
+    /// </summary>
     void TouchControl()
     {
         Vector2 origPos;
@@ -79,6 +94,10 @@ public class CameraControl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method allows scrolling of the different levels inside the world using mouse control.
+    /// This method is used for debugging purposes.
+    /// </summary>
     void MouseControl()
     {
         if (Input.GetMouseButtonDown(1))
@@ -108,6 +127,10 @@ public class CameraControl : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// This method returns the minimum Y axis value.
+    /// </summary>
+    /// <returns> Minimum Y axis value </returns>
     public float getMinY()
     {
         return minY;
