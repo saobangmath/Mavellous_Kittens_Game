@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
+/// <summary>
+/// The main controller that handles the inputs in the Character Selection screen.
+/// </summary>
 public class CharacterSelectionHandler : MonoBehaviour
 {
     public GameObject spriteObj;
@@ -29,7 +32,10 @@ public class CharacterSelectionHandler : MonoBehaviour
         }
     }
 
-    // Handles click on left arrow button in character selection screen
+    /// <summary>
+    /// Handles click on left arrow button in character selection screen. It changes the index of the character and displays the character sprite 
+    /// that the index is pointing to.
+    /// </summary>
     public void OnLeftArrowClick()
     {
         if (characterIndex == 0) characterIndex = animArr.Length - 1;
@@ -37,7 +43,10 @@ public class CharacterSelectionHandler : MonoBehaviour
         DisplayCharacter();
     }
 
-    // Handles click on right arrow button in character selection screen
+    /// <summary>
+    /// Handles click on left arrow button in character selection screen. It changes the index of the character and displays the character sprite 
+    /// that the index is pointing to.
+    /// </summary>
     public void OnRightArrowClick()
     {
         if (characterIndex == animArr.Length - 1) characterIndex = 0;
@@ -45,14 +54,19 @@ public class CharacterSelectionHandler : MonoBehaviour
         DisplayCharacter();
     }
 
-    // Renders character's sprite
+    /// <summary>
+    /// Renders the Character Sprite that is being pointed by the current index.
+    /// </summary>
     public void DisplayCharacter()
     {
         spriteObj.GetComponent<Animator>().runtimeAnimatorController = animArr[characterIndex];
         Debug.Log("Currently selected character: " + animArr[characterIndex]);
     }
 
-    // Handles click on save button in character selection screen
+    /// <summary>
+    /// Saves the character data to the user's data in the Firebase database.
+    /// Also updates the DataController on the current character that is being used.
+    /// </summary>
     public void OnClickSaveCharacter()
     {
         //If not loading from main menu (loading from username input)
@@ -73,6 +87,9 @@ public class CharacterSelectionHandler : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Handles the back button if the user wants to change his/her username.
+    /// </summary>
     public void OnClickBackButton()
     {
         SceneManager.LoadSceneAsync("InputUsernameScreen");
