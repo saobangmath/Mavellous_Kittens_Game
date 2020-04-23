@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class handles the attack animations of the enemy and the effect on the player.
+/// </summary>
 [RequireComponent(typeof(Animator))]
 public class EnemyScript : MonoBehaviour
 {
@@ -20,6 +23,10 @@ public class EnemyScript : MonoBehaviour
     public bool isAttacking = false;
     [SerializeField] private GameObject weapon;
     private bool complete = false;
+    
+    /// <summary>
+    /// In the Start() method, components such as the playerScript, dataController and animator are initialised for the attack to be performed.
+    /// </summary>
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +43,9 @@ public class EnemyScript : MonoBehaviour
         _hp = maxHP;
     }
 
+    /// <summary>
+    /// This method checks for keyboard inputs that trigger an attack (for debugging purposes).
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
@@ -50,7 +60,9 @@ public class EnemyScript : MonoBehaviour
             _anim.SetTrigger("attack");
         }
     }
-
+    /// <summary>
+    /// This method starts the attack of the enemy.
+    /// </summary>
     IEnumerator runAttack()
     {
         isAttacking = true;
@@ -62,6 +74,9 @@ public class EnemyScript : MonoBehaviour
         isAttacking = false;
     }
 
+    /// <summary>
+    /// This method decreases the health points in the healthpoint bar of the player.
+    /// </summary>
     public void DecreaseHP()
     {
         _anim.SetTrigger("hit");
@@ -69,6 +84,9 @@ public class EnemyScript : MonoBehaviour
         _hp -= 1;
     }
     
+    /// <summary>
+    /// This method detects if there is a 2D collision.
+    /// </summary>
     public void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Weapon"))
@@ -77,6 +95,9 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method deactivates the enemy's weapon.
+    /// </summary>
     public void DeactivateWeapon()
     {
         weapon.SetActive(false);
