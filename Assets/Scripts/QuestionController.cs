@@ -9,6 +9,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class handles the methods related to the quiz questions in the game play. 
+/// These include updating the scores of the user, creating a countdown timer and displaying the question text and choices.
+/// </summary>
 [RequireComponent(typeof(TurnController))]
 public class QuestionController : MonoBehaviour
 {
@@ -31,6 +35,9 @@ public class QuestionController : MonoBehaviour
     private float timeRemaining;
     private RoundData currentRoundData;
     
+    /// <summary>
+    /// The Start() method initialises the data controller, loads the questions for the level and sets the countdown timer for the first question to 30 seconds.
+    /// </summary>
     // Start is called before the first frame update
     private void Start()
     {
@@ -61,6 +68,10 @@ public class QuestionController : MonoBehaviour
         isRoundActive = true;
     }
 
+    /// <summary>
+    /// This method acts as a countdown timer for each question in the game.
+    /// If there is no time left, the level ends.
+    /// </summary>
     private void Update()
     {
         if (isRoundActive)
@@ -75,6 +86,9 @@ public class QuestionController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method updates the display of the question text and choices for each question.
+    /// </summary>
     private void UpdateQuestion(int index)
     {
         for (int i = 0; i < choiceButtons.Length; ++i)
@@ -88,7 +102,9 @@ public class QuestionController : MonoBehaviour
         }
     }
     
-    
+    /// <summary>
+    /// This method checks if the answer selected is correct. It also displays the correct answer and the option selected.
+    /// </summary>
     public void CheckAns(int choice)
     {
         isRoundActive = false;
@@ -121,11 +137,20 @@ public class QuestionController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// This method updates the display of the time remaining.
+    /// </summary>
     private void UpdateTimeRemainingDisplay()
     {
         timeRemainingDisplay.text = Mathf.Round(timeRemaining).ToString();
     }
     
+    /// <summary>
+    /// This method is called after each question has been answered and the attack script has been executed.
+    /// It resets the countdown timer for each question to 30 seconds. 
+    /// If the player still has healthpoints and if the current question is not the last question, the next button is loaded for the next question.
+    /// Otherwise, the level ends.
+    /// </summary>
     public void EndRound()
     {
         isRoundActive = false;
@@ -142,6 +167,9 @@ public class QuestionController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method is called to start each new question. It makes the choice buttons for each question active.
+    /// </summary>
     public void StartNewRound()
     {
         nextButton.SetActive(false);
@@ -155,6 +183,10 @@ public class QuestionController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method is called when the level has ended. The score is sent to the Firebase and displayed on the screen.
+    /// If the player's health is completely depleted, the player loses. Otherwise, the last level of the user increases.
+    /// </summary>
     private void LevelFinished()
     {
         PostScore();
@@ -171,6 +203,9 @@ public class QuestionController : MonoBehaviour
         levelFinishPrompt.GetComponentInChildren<TextMeshProUGUI>().text = "Score: "+score.ToString();
     }
 
+    /// <summary>
+    /// This method creates a new attempt and sends the score to the Firebase for updating.
+    /// </summary>
     private void PostScore()
     {
         //If current user is the debug user
@@ -191,11 +226,17 @@ public class QuestionController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method returns the score of the player.
+    /// </summary>
     public int getScore()
     {
         return score;
     }
 
+    /// <summary>
+    /// This method returns the roundData of the level.
+    /// </summary>
     public RoundData getRoundData()
     {
         return currentRoundData;
