@@ -2,6 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// The class stores the details of each question (e.g. question text, index of correct answer).
+/// </summary>
 [System.Serializable]
 public class QnA
 {
