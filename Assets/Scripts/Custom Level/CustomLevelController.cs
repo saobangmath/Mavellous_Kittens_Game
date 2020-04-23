@@ -6,7 +6,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-
+/// <summary>
+/// The class which manage the logic/operations of new Custom Level 
+/// </summary>
 public class CustomLevelController : MonoBehaviour
 {
     private DataController _dataController;
@@ -29,8 +31,9 @@ public class CustomLevelController : MonoBehaviour
     [SerializeField] private GameObject confButton;
     [SerializeField] private GameObject cancelButton;
     [SerializeField] private GameObject lvlIdTxtBack;
-    
-    // Start is called before the first frame update
+    /// <summary>
+    /// Start() function is triggered before the first frame update to set up all required variables for the default view of the Custom Level scene
+    /// </summary>
     void Start()
     {
         _dataController = FindObjectOfType<DataController>();
@@ -54,7 +57,9 @@ public class CustomLevelController : MonoBehaviour
         UpdateEnemyChr(0);
 
     }
-
+    /// <summary>
+    /// the function OnNextEnemyButton() is triggered when the users choose the next enemyb w.r.t their current enemy choosen.
+    /// </summary>
     public void OnNextEnemyButton()
     {
         if (enemyChrIdx == enemySpriteNames.Length - 1)
@@ -67,7 +72,9 @@ public class CustomLevelController : MonoBehaviour
         }
         UpdateEnemyChr(enemyChrIdx);
     }
-
+    /// <summary>
+    /// the function OnPrevEnemyButton() triggered when the users choose the previous enemy w.r.t their current enemy chosen.
+    /// </summary>
     public void OnPrevEnemyButton()
     {
         if (enemyChrIdx == 0)
@@ -80,7 +87,10 @@ public class CustomLevelController : MonoBehaviour
         }
         UpdateEnemyChr(enemyChrIdx);
     }
-
+    /// <summary>
+    /// the function generate a unique Id for a new custom Level
+    /// </summary>
+    /// <returns>a new unique string for the id new custom level code/ id</returns>
     private string GenerateLevelID()
     {
         //characters available as level id
@@ -115,7 +125,9 @@ public class CustomLevelController : MonoBehaviour
 
         return resultString;
     }
-
+    /// <summary>
+    /// the function OnFinishedLevel() is triggered when a level is finished by a player
+    /// </summary>
     public void OnFinishLevel()
     {
         nextButton.SetActive(false);
@@ -126,7 +138,9 @@ public class CustomLevelController : MonoBehaviour
         
         _toggleContainer.DeactivateOffToggle();
     }
-
+    /// <summary>
+    /// the function OnConfirmButton() is triggered when a confirm button is clicked for creating for new custom level with choosen questions and enemy characters
+    /// </summary>
     public void OnConfirmButton()
     {
         //Create the chosen enemy sprite and question into a new level object
@@ -144,7 +158,9 @@ public class CustomLevelController : MonoBehaviour
             
         _firebaseScript.AddLevel(newLevel);
     }
-
+    /// <summary>
+    /// the function OnCancelButton() is triggered when the cancel button is clicked which mean that the new custom level is not exactly created. 
+    /// </summary>
     public void OnCancelButton()
     {
         nextButton.SetActive(true);
@@ -155,18 +171,27 @@ public class CustomLevelController : MonoBehaviour
         
         _toggleContainer.ActivateAllToggle();
     }
+    /// <summary>
+    /// the function UpdateEnemyChr(idx) is triggered when the character index is changed 
+    /// </summary>
+    /// <param name="idx"></param>
     private void UpdateEnemyChr(int idx)
     {
         enemySprite.GetComponent<Animator>().runtimeAnimatorController =
             _enemyAnimatorMap.GetAnimatorController(enemySpriteNames[idx]);
         enemySprite.transform.position = enemyChrPos;
     }
-
+    /// <summary>
+    /// the function BacktoMenu to back to the main menu 
+    /// </summary>
     public void BackToMenu()
     {
         SceneManager.LoadSceneAsync("CustomLevels");
     }
-
+    /// <summary>
+    ///  the setBoss(bossId) is triggered when the bossId is changed
+    /// </summary>
+    /// <param name="bossId">The boss integer id of the 3 available animal bosses</param> 
     public void setBoss(int bossId)
     {
         enemyChrIdx = bossId;
