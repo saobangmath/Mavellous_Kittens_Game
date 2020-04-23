@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// The class in charge of animating the player moving to each level.
+/// </summary>
 public class PlayerWorldMovement : MonoBehaviour
 {
     [SerializeField] private GameObject levelBaseGameObject;
@@ -28,12 +32,18 @@ public class PlayerWorldMovement : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Get the waypoints of each level button from the LevelScript.
+    /// </summary>
     public void setWaypoints()
     {
         _levelScript = levelBaseGameObject.GetComponentInChildren<LevelScript>();
         waypoints = _levelScript.getWaypoints();
     }
 
+    /// <summary>
+    /// Returns the player back to the starting position, i.e. Level 1
+    /// </summary>
     public void resetPlayer()
     {
         //Resets player position to default
@@ -43,6 +53,10 @@ public class PlayerWorldMovement : MonoBehaviour
         transform.position = waypoints[0].position;
     }
 
+    /// <summary>
+    /// Moves the player to the specified Level number
+    /// </summary>
+    /// <param name="wayIdx">The level number, ranges from 0 to 5</param>
     public void movePlayer(int wayIdx)
     {
         //Checks if the player is currently moving
@@ -54,6 +68,10 @@ public class PlayerWorldMovement : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// The function in charge of animating the player's UI component to the chosen Level button's waypoint.
+    /// </summary>
+    /// <param name="wayIdx">The level number, ranges from 0 to 5</param>
     IEnumerator moveToWaypoint(int wayIdx)
     {
         Vector3 currPos = _playerTransform.position;

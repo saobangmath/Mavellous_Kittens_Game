@@ -191,7 +191,7 @@ public class MenuScreenController : MonoBehaviour
 	}
 
 	/// <summary>
-	/// This function is triggered when the user taps on a level during the Level Selection screen. It takes the level
+	/// This function is triggered after the user taps on a level during the Level Selection screen. It takes the level
 	/// that the user has selected as a parameter. After the character sprite traverses
 	/// to the Level on screen, this function triggers the Pop-Up informing the user of the World and Level and provides the user with
 	/// the Play and Leaderboard buttons.
